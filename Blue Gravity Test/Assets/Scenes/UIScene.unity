@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 813353630}
   - component: {fileID: 813353632}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: Player Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,15 +482,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35cb5e0aeb9a1740a79bab14cbcd6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowedItems:
-  - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
-    InitialAmount: 2
-  - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
-    InitialAmount: 5
+  startingItems: []
   numberOfSlots: 36
+  itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
   inventorySaveKey: PlayerInventory
   slotsParent: {fileID: 907886472}
   slotPrefab: {fileID: 407325736994126527, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
+  slots: []
 --- !u!1 &907886471
 GameObject:
   m_ObjectHideFlags: 0

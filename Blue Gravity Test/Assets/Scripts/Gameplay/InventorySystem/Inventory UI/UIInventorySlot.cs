@@ -19,7 +19,7 @@ namespace Jega.BlueGravity
             if (itemPair.IsValid)
             {
                 iconImage.sprite = itemPair.Item.Icon;
-                textMesh.text = itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.InitialAmount).ToString();
+                textMesh.text = itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount).ToString();
             }
         }
     }

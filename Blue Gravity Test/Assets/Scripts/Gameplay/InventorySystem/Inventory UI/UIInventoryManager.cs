@@ -8,10 +8,11 @@ namespace Jega.BlueGravity
     public class UIInventoryManager : MonoBehaviour
     {
         [Header("Game Design Params")]
-        [SerializeField] private List<ItemPair> allowedItems;
+        [SerializeField] private List<ItemPair> startingItems;
         [SerializeField] private int numberOfSlots;
 
         [Header("Programming Params")]
+        [SerializeField] private InventoryItemCollection itemCollection;
         [SerializeField] private string inventorySaveKey;
         [SerializeField] private Transform slotsParent;
         [SerializeField] private UIInventorySlot slotPrefab;
@@ -28,8 +29,8 @@ namespace Jega.BlueGravity
         {
             slots = new List<Slot>();
             List<ItemPair> unfilledItemPairs = new List<ItemPair>();
-            foreach(ItemPair itemPair in allowedItems)
-                if(itemPair.Item.GetCustomSavedAmount(inventorySaveKey, itemPair.InitialAmount) > 0)
+            foreach(ItemPair itemPair in startingItems)
+                if(itemPair.Item.GetCustomSavedAmount(inventorySaveKey, itemPair.StartingAmount) > 0)
                     unfilledItemPairs.Add(itemPair);
 
             //Fill saved slots
@@ -39,16 +40,17 @@ namespace Jega.BlueGravity
                 int storedItemIndex = PlayerPrefs.GetInt(inventorySaveKey + slotSaveKey + i, -1);
                 if (storedItemIndex >= 0)
                 {
-                    ItemPair allowedPair = allowedItems[storedItemIndex];
-                    if(allowedPair.Item.GetCustomSavedAmount(inventorySaveKey, allowedPair.InitialAmount) > 0)
+                    InventoryItem storedItem = itemCollection.Collection[storedItemIndex];
+                    int startingItemIndex = startingItems.FindIndex(a => a.Item == storedItem);
+                    int startingAmount = startingItemIndex >= 0 ? startingItems[startingItemIndex].StartingAmount : 0;
+                    if (storedItem.GetCustomSavedAmount(inventorySaveKey, startingAmount) > 0)
                     {
-                        itemPair = new ItemPair(allowedItems[storedItemIndex]);
+                        itemPair = new ItemPair(storedItem, startingAmount);
                         unfilledItemPairs.Remove(itemPair);
                     }
                 }
                 UIInventorySlot slotSetup = CreateNewSlot(itemPair);
-                int itemIndex = allowedItems.FindIndex(a => a.Item == itemPair.Item);
-                slots.Add(new Slot(slotSetup, i, itemPair, inventorySaveKey, itemIndex));
+                slots.Add(new Slot(slotSetup, i, itemPair, inventorySaveKey, storedItemIndex));
             }
 
 
@@ -63,8 +65,9 @@ namespace Jega.BlueGravity
                     Slot currentSlot = slots[i];
                     if (slots[i].IsEmpty)
                     {
-                        int itemIndex = allowedItems.FindIndex(a => a.Item == itemPair.Item);
-                        slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, inventorySaveKey, itemIndex);
+                        itemPair.Item.SetCustomSavedAmount(inventorySaveKey, itemPair.StartingAmount);
+                        int storedItemIndex = itemCollection.Collection.IndexOf(itemPair.Item);
+                        slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, inventorySaveKey, storedItemIndex);
                         slots[i].UISlot.UpdateInfo(itemPair, inventorySaveKey);
                         break;
                     }
@@ -88,13 +91,13 @@ namespace Jega.BlueGravity
             public ItemPair ItemPair;
             public UIInventorySlot UISlot;
             public int Index;
-            public Slot(UIInventorySlot uiSlot, int slotIndex, ItemPair itemPair, string customSlotSaveKey, int itemIndex = -1)
+            public Slot(UIInventorySlot uiSlot, int slotIndex, ItemPair itemPair, string customSlotSaveKey, int itemIndex)
             {
                 ItemPair = itemPair;
                 UISlot = uiSlot;
                 Index = slotIndex;
 
-                if(itemPair.Item != null && ItemPair.Item.GetCustomSavedAmount(customSlotSaveKey, ItemPair.InitialAmount) > 0)
+                if(itemPair.Item != null && ItemPair.Item.GetCustomSavedAmount(customSlotSaveKey, ItemPair.StartingAmount) > 0)
                     PlayerPrefs.SetInt(customSlotSaveKey + slotSaveKey + slotIndex, itemIndex);
                 
             }
@@ -107,12 +110,18 @@ namespace Jega.BlueGravity
         public struct ItemPair
         {
             public InventoryItem Item;
-            public int InitialAmount;
+            public int StartingAmount;
 
+
+            public ItemPair(InventoryItem item, int startingAmount = 0)
+            {
+                Item = item;
+                StartingAmount = startingAmount;
+            }
             public ItemPair(ItemPair copy)
             {
                 Item = copy.Item;
-                InitialAmount = copy.InitialAmount;
+                StartingAmount = copy.StartingAmount;
             }
 
             public bool IsValid => Item != null;
