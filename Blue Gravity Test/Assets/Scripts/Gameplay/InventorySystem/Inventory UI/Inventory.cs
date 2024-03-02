@@ -29,15 +29,15 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>();
 
             InitialInvetorySetup();
-            InventorySlot.OnRequestSlotSwitch += SwitchSlots;
-            InventorySlot.OnRequestClothingInventorySwitch += SwitchClothingInventorySlots;
+            InventorySlot.OnRequestOwnedSlotsSwitch += SwitchSlots;
+            InventorySlot.OnRequestClothingInventorySwitch += HandleClothingEquiping;
             InventorySlot.OnItemBought += CheckItemBought;
             InventorySlot.OnItemSold += CheckItemSold;
         }
 
         protected virtual void OnDestroy()
         {
-            InventorySlot.OnRequestSlotSwitch -= SwitchSlots;
+            InventorySlot.OnRequestOwnedSlotsSwitch -= SwitchSlots;
         }
 
         protected virtual void OnEnable()
@@ -161,20 +161,19 @@ namespace Jega.BlueGravity
             UpdateSlotVisual(original, slots[originSlot.Index].ItemPair, originSlot.Index);
             UpdateSlotVisual(destination, slots[destinationSlot.Index].ItemPair, destinationSlot.Index);
         }
-        void SwitchClothingInventorySlots(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest)
+        void HandleClothingEquiping(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest)
         {
-            if(inventoryOrigin != this && inventoryDestination != this) return;
+            if (inventoryOrigin != this && inventoryDestination != this) return;
 
             if (inventoryOrigin == this)
             {
                 LoseItemAmount(itemOrigin, 1);
-                if (itemDest != null && itemDest != itemOrigin)
+                if (itemDest != null)
                     GainItemAmount(itemDest, 1);
             }
-
-            else if (inventoryDestination == this)
+            else
             {
-                if (itemDest != null && itemDest != itemOrigin)
+                if (itemDest != null)
                     LoseItemAmount(itemDest, 1);
 
                 GainItemAmount(itemOrigin, 1);
@@ -236,7 +235,7 @@ namespace Jega.BlueGravity
         }
 
 
-        #region public straucks
+        #region public structs
         [Serializable]
         public struct Slot
         {

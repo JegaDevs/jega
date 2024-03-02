@@ -11,7 +11,7 @@ namespace Jega.BlueGravity
 {
     public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        public static SlotSwitch OnRequestSlotSwitch;
+        public static SlotSwitch OnRequestOwnedSlotsSwitch;
         public static SlotSwitchInventories OnRequestClothingInventorySwitch;
         public static ItemTransaction OnItemBought;
         public static ItemTransaction OnItemSold;
@@ -43,6 +43,7 @@ namespace Jega.BlueGravity
         private bool IsShopActive => sessionService.IsShopActive;
         private List<ShopInventory.ItemPrices> shopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
 
+
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>(); 
@@ -51,6 +52,7 @@ namespace Jega.BlueGravity
             unAvailable.gameObject.SetActive(false);
             pricePopUp.SetActive(false);
         }
+
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
             isEmpty = true;
@@ -115,24 +117,38 @@ namespace Jega.BlueGravity
             textMesh.gameObject.SetActive(true);
 
             GameObject destination = eventData.pointerCurrentRaycast.gameObject;
+            HandleSlotSwapInteractions(destination);
+        }
+
+        private void HandleSlotSwapInteractions(GameObject destination)
+        {
+            bool sucess = false;
             if (destination != null && destination.TryGetComponent(out InventorySlot newSlot) && newSlot != this)
             {
-                if(inventoryManager == newSlot.inventoryManager && inventoryManager is not ClothingInventory)
-                    OnRequestSlotSwitch?.Invoke(inventoryManager, this, newSlot);
+                bool isOriginClothingInventory = inventoryManager is ClothingInventory;
+                bool isDestinationClothingInventory = newSlot.inventoryManager is ClothingInventory;
+                ClothingInventory destClothingInventory = newSlot.inventoryManager as ClothingInventory;
+
+                if (!isOriginClothingInventory && inventoryManager == newSlot.inventoryManager)
+                    OnRequestOwnedSlotsSwitch?.Invoke(inventoryManager, this, newSlot);
                 else
                 {
-                    if(newSlot.inventoryManager is ClothingInventory clothingInventory && inventoryManager is not ClothingInventory)
+                    if (!isOriginClothingInventory && isDestinationClothingInventory &&
+                         destClothingInventory.CheckIfSwitchIsValid(inventoryItem, newSlot.slotIndex))
                     {
-                        if (clothingInventory.CheckIfSwitchIsValid(inventoryItem, newSlot.slotIndex))
-                            OnRequestClothingInventorySwitch(inventoryManager, clothingInventory, InventoryItem, newSlot.inventoryItem);
-                        else
-                            iconTransform.anchoredPosition = originalPosition;
+                        OnRequestClothingInventorySwitch(inventoryManager, destClothingInventory, InventoryItem, newSlot.inventoryItem);
+                        sucess = true;
+                        
                     }
-                    else if (inventoryManager is ClothingInventory && newSlot.inventoryManager is not ClothingInventory)
-                            OnRequestClothingInventorySwitch(inventoryManager, newSlot.inventoryManager, InventoryItem, newSlot.inventoryItem);
+                    else if (isOriginClothingInventory && !isDestinationClothingInventory && InventoryItem != newSlot.InventoryItem)
+                    {
+                        OnRequestClothingInventorySwitch(inventoryManager, newSlot.inventoryManager, InventoryItem, newSlot.inventoryItem);
+                        sucess = true;
+                    }
                 }
             }
-            else
+
+            if(!sucess)
                 iconTransform.anchoredPosition = originalPosition;
         }
 
