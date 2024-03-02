@@ -15,6 +15,11 @@ namespace Jega.BlueGravity
         private Vector2 velocityVector;
 
         private InputService inputService;
+
+        public Rigidbody2D Body => body;
+        public Vector2 VelocityVector => velocityVector;
+
+
         private void Awake()
         {
             inputService = ServiceProvider.GetService<InputService>();

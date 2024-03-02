@@ -15,18 +15,6 @@ PrefabInstance:
       propertyPath: notAffordableIndicador
       value: 
       objectReference: {fileID: 4959528407235027356}
-    - target: {fileID: 6730121350823183350, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
-      propertyPath: m_Color.b
-      value: 0.7607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 6730121350823183350, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
-      propertyPath: m_Color.g
-      value: 0.98823535
-      objectReference: {fileID: 0}
-    - target: {fileID: 6730121350823183350, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
-      propertyPath: m_Color.r
-      value: 0.8980393
-      objectReference: {fileID: 0}
     - target: {fileID: 6875618490174303840, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
       propertyPath: m_Name
       value: Shop Inventory Slot
