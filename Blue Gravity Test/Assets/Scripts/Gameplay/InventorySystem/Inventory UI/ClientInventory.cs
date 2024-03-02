@@ -13,10 +13,10 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>(); 
             base.Awake();
         }
-        protected override void UpdateSlotVisual(UIInventorySlot slotVisual, ItemPair itemPair)
+        private void OnEnable()
         {
-            base.UpdateSlotVisual(slotVisual, itemPair);
-            slotVisual.UpdateAvailability();
+            foreach(Slot slot in slots)
+                slot.UISlot.UpdateAvailability();
         }
     }
 }

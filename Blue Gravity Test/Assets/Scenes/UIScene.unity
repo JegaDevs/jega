@@ -1228,7 +1228,7 @@ MonoBehaviour:
   - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
     BuyPrice: 20
     SellPrice: 10
-  - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
+  - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
     BuyPrice: 50
     SellPrice: 15
 --- !u!114 &1528928780

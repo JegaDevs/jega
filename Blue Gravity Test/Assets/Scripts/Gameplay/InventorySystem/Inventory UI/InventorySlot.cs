@@ -8,11 +8,11 @@ using static Jega.BlueGravity.Inventory;
 
 namespace Jega.BlueGravity
 {
-    public class UIInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 
     {
         public static SlotSwitch OnRequestSlotSwitch;
-        public delegate void SlotSwitch(Inventory inventoryManager, UIInventorySlot original, UIInventorySlot destination);
+        public delegate void SlotSwitch(Inventory inventoryManager, InventorySlot original, InventorySlot destination);
 
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI textMesh;
@@ -66,8 +66,8 @@ namespace Jega.BlueGravity
 
         public void UpdateAvailability()
         {
-            if (!sessionService.IsShopActive) return;
-            int catalogIndex = inventoryItem != null ? shopCatalog.FindIndex(a => a.Item == inventoryItem) : -1;
+            if (!sessionService.IsShopActive || inventoryItem == null) return;
+            int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
             unAvailable.gameObject.SetActive(catalogIndex == -1);
         }
         #region Draging Behavior
@@ -95,7 +95,7 @@ namespace Jega.BlueGravity
             textMesh.gameObject.SetActive(true);
 
             GameObject destination = eventData.pointerCurrentRaycast.gameObject;
-            if (destination != null && destination.TryGetComponent(out UIInventorySlot newSlot) && newSlot != this)
+            if (destination != null && destination.TryGetComponent(out InventorySlot newSlot) && newSlot != this)
                 OnRequestSlotSwitch?.Invoke(inventoryManager, this, newSlot);
             else
                 iconTransform.anchoredPosition = originalPosition;
