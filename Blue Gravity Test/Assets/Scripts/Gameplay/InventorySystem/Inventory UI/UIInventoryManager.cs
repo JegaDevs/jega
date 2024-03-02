@@ -37,7 +37,7 @@ namespace Jega.BlueGravity
             {
                 ItemPair itemPair = default;
                 int storedItemIndex = PlayerPrefs.GetInt(inventorySaveKey + slotSaveKey + i, -1);
-                if (storedItemIndex >= 0 && allowedItems[storedItemIndex].Item.GetCustomSavedAmount(inventorySaveKey, allowedItems[storedItemIndex].InitialAmount) > 0)
+                if (storedItemIndex >= 0)
                 {
                     ItemPair allowedPair = allowedItems[storedItemIndex];
                     if(allowedPair.Item.GetCustomSavedAmount(inventorySaveKey, allowedPair.InitialAmount) > 0)
@@ -79,6 +79,8 @@ namespace Jega.BlueGravity
             uiSlot.UpdateInfo(itemPair, inventorySaveKey);
             return uiSlot;
         }
+
+
 
         [Serializable]
         public struct Slot
