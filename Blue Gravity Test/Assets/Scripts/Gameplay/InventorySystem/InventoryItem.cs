@@ -8,11 +8,11 @@ namespace Jega.BlueGravity
     {
         public Sprite Icon;
 
-        public int GetCustomSavedAmount(string customKey, int startingAmount = 0)
+        public int GetCustomSavedAmount(string customKey, int startingAmount)
         {
             return PlayerPrefs.GetInt(customKey + name + "_ItemAmount", startingAmount);
         }
-        public void SetCustomSavedAmount(string customKey, int startingAmount = 0)
+        public void SetCustomSavedAmount(string customKey, int startingAmount)
         {
             PlayerPrefs.SetInt(customKey + name + "_ItemAmount", startingAmount);
         }
