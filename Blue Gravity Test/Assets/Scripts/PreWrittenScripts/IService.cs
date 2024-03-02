@@ -1,4 +1,4 @@
-namespace Jega.Utils
+namespace Jega.PreWrittenCode
 {
     public interface IService
     {
