@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Jega.BlueGravity.PreWrittenCode;
 using static Jega.BlueGravity.Inventory;
+using System.Diagnostics;
 
 namespace Jega.BlueGravity
 {
@@ -74,6 +75,12 @@ namespace Jega.BlueGravity
             }
             int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
             unAvailable.gameObject.SetActive(catalogIndex == -1);
+
+            if (isShop)
+            {
+                int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
+                notAffordableIndicador.SetActive(sessionService.CurrentCoins < price);
+            }
         }
 
         #region Draging Behavior
@@ -118,9 +125,6 @@ namespace Jega.BlueGravity
             pricePopUp.gameObject.SetActive(true);
             int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
             priceText.text = price.ToString();
-
-            if (isShop)
-                notAffordableIndicador.SetActive(sessionService.CurrentCoins >= price);
             
         }
 
@@ -137,6 +141,8 @@ namespace Jega.BlueGravity
             if (catalogIndex == -1) return;
 
             int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
+
+            //if(isShop)
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Jega.BlueGravity
             InitialInvetorySetup();
             InventorySlot.OnRequestSlotSwitch += SwitchSlots;
         }
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             InventorySlot.OnRequestSlotSwitch -= SwitchSlots;
         }
@@ -33,10 +33,7 @@ namespace Jega.BlueGravity
         protected virtual void OnEnable()
         {
             UpdateSlotsRegistries();
-            foreach (Slot slot in slots)
-            {
-                UpdateSlotVisual(slot.UISlot, slot.ItemPair);
-            }
+            UpdateSlotsVisuals();
         }
 
         #region initial Setup
@@ -137,6 +134,12 @@ namespace Jega.BlueGravity
         protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair)
         {
             slotVisual.UpdateInfo(this, itemPair, InventorySaveKey);
+        }
+
+        protected void UpdateSlotsVisuals()
+        {
+            foreach (Slot slot in slots)
+                UpdateSlotVisual(slot.UISlot, slot.ItemPair);
         }
 
         #region public straucks

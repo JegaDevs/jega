@@ -14,6 +14,16 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>(); 
             base.Awake();
         }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            sessionService.RegisterActiveClientInventory(this);
+        }
+        private void OnDisable()
+        {
+            sessionService.UnregisterClientShopInventory();
+        }
         protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair)
         {
             base.UpdateSlotVisual(slotVisual, itemPair);
