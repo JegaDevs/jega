@@ -11,13 +11,10 @@ namespace Jega.BlueGravity
     {
         [SerializeField] private List<ItemPrices> shopCatalog;
 
-        private SessionService sessionService;
-
         public List<ItemPrices> ShopCatalog => new List<ItemPrices>(shopCatalog);
 
         protected override void Awake()
         {
-            sessionService = ServiceProvider.GetService<SessionService>();
             base.Awake();
             sessionService.OnCoinsUpdate += UpdateSlotsVisuals;
         }

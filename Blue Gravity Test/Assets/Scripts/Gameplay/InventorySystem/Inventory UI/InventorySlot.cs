@@ -12,8 +12,10 @@ namespace Jega.BlueGravity
     public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public static SlotSwitch OnRequestSlotSwitch;
+        public static ItemTransaction OnItemBought;
+        public static ItemTransaction OnItemSold;
         public delegate void SlotSwitch(Inventory inventory, InventorySlot original, InventorySlot destination);
-        public delegate void ItemTransaction(Inventory inventory, InventoryItem item, int amount);
+        public delegate void ItemTransaction(Inventory shopInventory, InventoryItem item, int amount);
 
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI textMesh;
@@ -142,7 +144,19 @@ namespace Jega.BlueGravity
 
             int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
 
-            //if(isShop)
+            if (isShop)
+            {
+                if(sessionService.CurrentCoins >= price)
+                {
+                    sessionService.CurrentCoins -= price;
+                    OnItemBought?.Invoke(inventoryManager, shopCatalog[catalogIndex].Item, 1);
+                }
+            }
+            else
+            {
+                sessionService.CurrentCoins += price;
+                OnItemSold?.Invoke(inventoryManager, shopCatalog[catalogIndex].Item, 1);
+            }
         }
     }
 }

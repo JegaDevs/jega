@@ -8,13 +8,6 @@ namespace Jega.BlueGravity
 {
     public class ClientInventory : Inventory
     {
-        private SessionService sessionService;
-        protected override void Awake()
-        {
-            sessionService = ServiceProvider.GetService<SessionService>(); 
-            base.Awake();
-        }
-
         protected override void OnEnable()
         {
             base.OnEnable();
