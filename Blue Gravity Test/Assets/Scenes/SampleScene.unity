@@ -238,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 95661715}
   - component: {fileID: 95661716}
+  - component: {fileID: 95661717}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -312,6 +313,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &95661717
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95661714}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: d0a7c9297f34a934f8db5994d7fb9a53, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &169310404
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +754,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4397378d45e3ae04ba538b94a8ede146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 36366740}
+  animators:
+  - {fileID: 36366740}
+  - {fileID: 95661717}
   xMovementParam: DirectionX
   yMovementParam: DirectionY
   velocityParam: Velocity

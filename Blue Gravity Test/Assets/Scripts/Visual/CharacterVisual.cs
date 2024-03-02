@@ -9,10 +9,10 @@ namespace Jega.BlueGravity
 {
     public class CharacterVisual : MonoBehaviour
     {
-        [SerializeField] private Animator animator;
-        [SerializeField, AnimatorParam("animator")] private string xMovementParam;
-        [SerializeField, AnimatorParam("animator")] private string yMovementParam;
-        [SerializeField, AnimatorParam("animator")] private string velocityParam;
+        [SerializeField] private List<Animator> animators;
+        [SerializeField] private string xMovementParam;
+        [SerializeField] private string yMovementParam;
+        [SerializeField] private string velocityParam;
 
         private InputService inputService;
         private void Awake()
@@ -21,9 +21,15 @@ namespace Jega.BlueGravity
         }
         private void Update()
         {
-            animator.SetFloat(velocityParam, inputService.MovementVector.sqrMagnitude);
-            animator.SetInteger(xMovementParam, (int)inputService.LastPerformedInput.x);
-            animator.SetInteger(yMovementParam, (int)inputService.LastPerformedInput.y);
+            float velocity = inputService.MovementVector.sqrMagnitude;
+            int xMovement = (int)inputService.LastPerformedInput.x;
+            int yMovement = (int)inputService.LastPerformedInput.y;
+            foreach(Animator animator in animators) 
+            {
+                animator.SetFloat(velocityParam, velocity);
+                animator.SetInteger(xMovementParam, xMovement);
+                animator.SetInteger(yMovementParam, yMovement);
+            }
         }
     }
 }
