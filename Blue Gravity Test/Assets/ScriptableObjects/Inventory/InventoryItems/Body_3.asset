@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8a4b6399f3311c4195d044669704eb0, type: 3}
-  m_Name: Head_1
+  m_Name: Body_3
   m_EditorClassIdentifier: 
-  Icon: {fileID: -1501700983, guid: 5a902fa51819ff94b93e705e8921655c, type: 3}
-  Type: 1
-  AnimatorController: {fileID: 22100000, guid: 81e7eb2f6827c3c48aad9ab08a18bfd4, type: 2}
+  Icon: {fileID: 1800451417, guid: fb9f88d1fe235ad478022ab238ae04f1, type: 3}
+  Type: 0
+  AnimatorController: {fileID: 22100000, guid: b07407071b1ad824780e1e2dab007dfd, type: 2}

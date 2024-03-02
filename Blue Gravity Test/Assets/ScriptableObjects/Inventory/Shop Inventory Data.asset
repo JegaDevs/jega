@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingItems:
   - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
-    StartingAmount: 2
+    StartingAmount: 1
   - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
     StartingAmount: 2
+  - Item: {fileID: 11400000, guid: 9e591d870dbbf31458fed3f4497d597a, type: 2}
+    StartingAmount: 3
+  - Item: {fileID: 11400000, guid: 8613a15d15abb154eb44a65471b0954b, type: 2}
+    StartingAmount: 4
   numberOfSlots: 6
   itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
   inventorySaveKey: ShopInventory
