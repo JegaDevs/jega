@@ -2,6 +2,7 @@ using Jega.BlueGravity.PreWrittenCode;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Jega.BlueGravity.Inventory;
 
 namespace Jega.BlueGravity
 {
@@ -13,10 +14,10 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>(); 
             base.Awake();
         }
-        private void OnEnable()
+        protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair)
         {
-            foreach(Slot slot in slots)
-                slot.UISlot.UpdateAvailability();
+            base.UpdateSlotVisual(slotVisual, itemPair);
+            slotVisual.UpdateAvailability();
         }
     }
 }

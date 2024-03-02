@@ -759,14 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35cb5e0aeb9a1740a79bab14cbcd6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems:
-  - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
-    StartingAmount: 2
-  - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
-    StartingAmount: 4
-  numberOfSlots: 36
-  itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
-  inventorySaveKey: PlayerInventory
+  inventoryData: {fileID: 11400000, guid: f477057b7fdada143ad8222c6226e44d, type: 2}
   slotsParent: {fileID: 907886472}
   slotPrefab: {fileID: 407325736994126527, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
   slots: []
@@ -1037,10 +1030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de4bbf2ac6924744bf7b1be13f481c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems: []
-  numberOfSlots: 36
-  itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
-  inventorySaveKey: PlayerInventory
+  inventoryData: {fileID: 11400000, guid: f477057b7fdada143ad8222c6226e44d, type: 2}
   slotsParent: {fileID: 1982494255}
   slotPrefab: {fileID: 407325736994126527, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
   slots: []
@@ -1213,14 +1203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9270bbe466326994ab73b6ad452cd454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems:
-  - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
-    StartingAmount: 1
-  - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
-    StartingAmount: 2
-  numberOfSlots: 36
-  itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
-  inventorySaveKey: ShopInventory
+  inventoryData: {fileID: 11400000, guid: 0e8ed6488ee30bf4c8f2db6fbae5c2f3, type: 2}
   slotsParent: {fileID: 1851103909}
   slotPrefab: {fileID: 2257521335749386952, guid: 609f01d8f26c1d34aa61f47a252ed2ae, type: 3}
   slots: []

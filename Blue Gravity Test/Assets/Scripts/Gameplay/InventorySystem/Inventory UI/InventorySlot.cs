@@ -9,10 +9,10 @@ using static Jega.BlueGravity.Inventory;
 namespace Jega.BlueGravity
 {
     public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
-
     {
         public static SlotSwitch OnRequestSlotSwitch;
-        public delegate void SlotSwitch(Inventory inventoryManager, InventorySlot original, InventorySlot destination);
+        public delegate void SlotSwitch(Inventory inventory, InventorySlot original, InventorySlot destination);
+        public delegate void ItemTransaction(Inventory inventory, InventoryItem item, int amount);
 
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI textMesh;
@@ -21,6 +21,7 @@ namespace Jega.BlueGravity
         [SerializeField] private bool isShop;
         [SerializeField] private Image unAvailable;
         [SerializeField] private GameObject pricePopUp;
+        [SerializeField] private GameObject notAffordableIndicador;
         [SerializeField] private TextMeshProUGUI priceText;
 
         private InventoryItem inventoryItem;
@@ -66,10 +67,15 @@ namespace Jega.BlueGravity
 
         public void UpdateAvailability()
         {
-            if (!sessionService.IsShopActive || inventoryItem == null) return;
+            if (!sessionService.IsShopActive || inventoryItem == null)
+            {
+                unAvailable.gameObject.SetActive(false);
+                return;
+            }
             int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
             unAvailable.gameObject.SetActive(catalogIndex == -1);
         }
+
         #region Draging Behavior
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -102,6 +108,7 @@ namespace Jega.BlueGravity
         }
 
         #endregion
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (isEmpty || !IsShopActive) return;
@@ -111,6 +118,10 @@ namespace Jega.BlueGravity
             pricePopUp.gameObject.SetActive(true);
             int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
             priceText.text = price.ToString();
+
+            if (isShop)
+                notAffordableIndicador.SetActive(sessionService.CurrentCoins >= price);
+            
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -121,7 +132,11 @@ namespace Jega.BlueGravity
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            if (isEmpty || !IsShopActive) return;
+            int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
+            if (catalogIndex == -1) return;
+
+            int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
         }
     }
 }

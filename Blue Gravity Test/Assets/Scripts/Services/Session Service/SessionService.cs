@@ -12,6 +12,12 @@ namespace Jega.BlueGravity
 
         public ShopInventory CurrentShopInventory => currentShopInventory;
         public bool IsShopActive => currentShopInventory != null;
+
+        public int CurrentCoins
+        {
+            get => PlayerPrefs.GetInt("CurrentPlayerCoins", 0);
+            set => PlayerPrefs.SetInt("CurrentPlayerCoins",  value);
+        }
         public void Preprocess()
         {
         }
