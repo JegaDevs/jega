@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Jega.BlueGravity
 {
-    public class UIInventoryManager : MonoBehaviour
+    public class InventoryManager : MonoBehaviour
     {
         [Header("Game Design Params")]
         [SerializeField] private List<ItemPair> startingItems;
@@ -23,8 +23,14 @@ namespace Jega.BlueGravity
         private void Awake()
         {
             InitialInvetorySetup();
+            UIInventorySlot.OnRequestSlotSwitch += SwitchSlots;
+        }
+        private void OnDestroy()
+        {
+            UIInventorySlot.OnRequestSlotSwitch -= SwitchSlots;
         }
 
+        #region initial Setup
         private void InitialInvetorySetup()
         {
             slots = new List<Slot>();
@@ -49,7 +55,7 @@ namespace Jega.BlueGravity
                         unfilledItemPairs.Remove(itemPair);
                     }
                 }
-                UIInventorySlot slotSetup = CreateNewSlot(itemPair);
+                UIInventorySlot slotSetup = CreateNewSlot(itemPair, i);
                 slots.Add(new Slot(slotSetup, i, itemPair, inventorySaveKey, storedItemIndex));
             }
 
@@ -68,7 +74,7 @@ namespace Jega.BlueGravity
                         itemPair.Item.SetCustomSavedAmount(inventorySaveKey, itemPair.StartingAmount);
                         int storedItemIndex = itemCollection.Collection.IndexOf(itemPair.Item);
                         slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, inventorySaveKey, storedItemIndex);
-                        slots[i].UISlot.UpdateInfo(itemPair, inventorySaveKey);
+                        slots[i].UISlot.UpdateInfo(this, itemPair, inventorySaveKey);
                         break;
                     }
                 }
@@ -76,29 +82,45 @@ namespace Jega.BlueGravity
             Debug.Log("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
 
-        private UIInventorySlot CreateNewSlot(ItemPair itemPair)
+        private UIInventorySlot CreateNewSlot(ItemPair itemPair, int index)
         {
             UIInventorySlot uiSlot = Instantiate(slotPrefab, slotsParent);
-            uiSlot.UpdateInfo(itemPair, inventorySaveKey);
+            uiSlot.UpdateInfo(this, itemPair, inventorySaveKey);
+            uiSlot.name = slotPrefab.name + index;
             return uiSlot;
         }
+        #endregion
 
+        void SwitchSlots(InventoryManager inventoryManager, UIInventorySlot original, UIInventorySlot destination)
+        {
+            if (inventoryManager != this) return;
 
+            Slot originSlot = slots.Find(a => a.UISlot == original);
+            Slot destinationSlot = slots.Find(a => a.UISlot == destination);
 
+            slots[originSlot.Index] = new Slot(originSlot.UISlot, originSlot.Index, destinationSlot.ItemPair, inventorySaveKey, destinationSlot.ItemIndex);
+            slots[destinationSlot.Index] = new Slot(destinationSlot.UISlot, destinationSlot.Index, originSlot.ItemPair, inventorySaveKey, originSlot.ItemIndex);
+
+            original.UpdateInfo(this, slots[originSlot.Index].ItemPair, inventorySaveKey);
+            destination.UpdateInfo(this, slots[destinationSlot.Index].ItemPair, inventorySaveKey);
+        }
+
+        #region public straucks
         [Serializable]
         public struct Slot
         {
             public ItemPair ItemPair;
             public UIInventorySlot UISlot;
             public int Index;
+            public int ItemIndex;
             public Slot(UIInventorySlot uiSlot, int slotIndex, ItemPair itemPair, string customSlotSaveKey, int itemIndex)
             {
                 ItemPair = itemPair;
                 UISlot = uiSlot;
                 Index = slotIndex;
+                ItemIndex = itemIndex;
 
-                if(itemPair.Item != null && ItemPair.Item.GetCustomSavedAmount(customSlotSaveKey, ItemPair.StartingAmount) > 0)
-                    PlayerPrefs.SetInt(customSlotSaveKey + slotSaveKey + slotIndex, itemIndex);
+                PlayerPrefs.SetInt(customSlotSaveKey + slotSaveKey + slotIndex, itemIndex);
                 
             }
 
@@ -126,5 +148,6 @@ namespace Jega.BlueGravity
 
             public bool IsValid => Item != null;
         }
+        #endregion
     }
 }
