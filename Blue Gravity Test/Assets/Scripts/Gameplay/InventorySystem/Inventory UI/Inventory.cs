@@ -181,7 +181,6 @@ namespace Jega.BlueGravity
 
         }
 
-
         private void CheckItemBought(Inventory shopIventory, InventoryItem item, int amount)
         {
             if(this == sessionService.CurrentClientInventory)
@@ -198,6 +197,7 @@ namespace Jega.BlueGravity
             else if (this == sessionService.CurrentClientInventory)
                 LoseItemAmount(item, amount);
         }
+
         protected virtual void GainItemAmount(InventoryItem item, int amount)
         {
             int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);

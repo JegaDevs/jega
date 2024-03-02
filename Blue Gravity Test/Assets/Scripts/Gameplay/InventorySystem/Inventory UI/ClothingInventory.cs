@@ -50,7 +50,7 @@ namespace Jega.BlueGravity
                 Slot currentSlot = slots[slotIndex];
                 int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
                 slots[slotIndex] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
-                UpdateSlotVisual(slots[BodySlotIndex].UISlot, itemPair, slotIndex);
+                UpdateSlotVisual(slots[slotIndex].UISlot, itemPair, slotIndex);
             }
         }
 

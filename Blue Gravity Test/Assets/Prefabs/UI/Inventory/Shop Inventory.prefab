@@ -130,8 +130,14 @@ MonoBehaviour:
   slots: []
   shopCatalog:
   - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
-    BuyPrice: 80
+    BuyPrice: 50
     SellPrice: 10
   - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
+    BuyPrice: 80
+    SellPrice: 30
+  - Item: {fileID: 11400000, guid: 9e591d870dbbf31458fed3f4497d597a, type: 2}
+    BuyPrice: 100
+    SellPrice: 50
+  - Item: {fileID: 11400000, guid: 8613a15d15abb154eb44a65471b0954b, type: 2}
     BuyPrice: 120
-    SellPrice: 15
+    SellPrice: 70

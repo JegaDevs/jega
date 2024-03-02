@@ -22,6 +22,8 @@ namespace Jega.BlueGravity
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI textMesh;
         [SerializeField] private Vector2 draggingOffset;
+        [SerializeField] private Vector2 headDraggingOffset;
+        [SerializeField] private Vector2 headOriginalPositionOffset;
         [Header("Shop interactions")]
         [SerializeField] private bool isShop;
         [SerializeField] private Image unAvailable;
@@ -41,6 +43,7 @@ namespace Jega.BlueGravity
         public Inventory InventoryManager => inventoryManager;
         public InventoryItem InventoryItem => inventoryItem;
         private bool IsShopActive => sessionService.IsShopActive;
+        private bool IsHeadItem => inventoryItem is ClothingItem clothingItem && clothingItem.Type == ClothingItem.ClothingType.Head;
         private List<ShopInventory.ItemPrices> shopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
 
 
@@ -49,6 +52,7 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>(); 
             iconTransform = iconImage.GetComponent<RectTransform>();
             originalPosition = iconTransform.anchoredPosition;
+
             unAvailable.gameObject.SetActive(false);
             pricePopUp.SetActive(false);
         }
@@ -56,9 +60,9 @@ namespace Jega.BlueGravity
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
             isEmpty = true;
-            iconTransform.anchoredPosition = originalPosition;
             textMesh.text = string.Empty;
             iconImage.gameObject.SetActive(itemPair.IsValid);
+
             if (itemPair.IsValid)
             {
                 int itemAmount = itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount);
@@ -73,6 +77,8 @@ namespace Jega.BlueGravity
             inventoryItem = itemPair.Item;
             inventoryManager = manager;
             this.slotIndex = slotIndex;
+            ResetIconPosition();
+
         }
 
         public void UpdateAvailability()
@@ -106,6 +112,7 @@ namespace Jega.BlueGravity
         {
             if (isEmpty || IsShopActive) return;
             iconImage.transform.position = eventData.position + draggingOffset;
+            iconImage.transform.position += IsHeadItem ? headDraggingOffset : Vector3.zero;
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -148,8 +155,17 @@ namespace Jega.BlueGravity
                 }
             }
 
-            if(!sucess)
-                iconTransform.anchoredPosition = originalPosition;
+            if (!sucess)
+                ResetIconPosition();
+        }
+
+        private void ResetIconPosition()
+        {
+            Vector2 offset = Vector2.zero;
+            if (IsHeadItem)
+                offset = headOriginalPositionOffset;
+
+            iconTransform.anchoredPosition = originalPosition + offset;
         }
 
         #endregion

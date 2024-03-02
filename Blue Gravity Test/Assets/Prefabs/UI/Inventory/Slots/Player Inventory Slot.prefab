@@ -596,6 +596,8 @@ MonoBehaviour:
   iconImage: {fileID: 3406068504965956423}
   textMesh: {fileID: 635124674331109384}
   draggingOffset: {x: 0, y: 12}
+  headDraggingOffset: {x: 0, y: -90}
+  headOriginalPositionOffset: {x: 0, y: -70}
   isShop: 0
   unAvailable: {fileID: 3421919597494124274}
   pricePopUp: {fileID: 4069216064465287062}
