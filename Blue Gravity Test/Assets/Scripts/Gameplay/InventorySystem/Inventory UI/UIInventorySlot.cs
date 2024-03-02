@@ -1,36 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
-using Unity.VisualScripting;
+using Jega.BlueGravity.PreWrittenCode;
+using static Jega.BlueGravity.Inventory;
 
 namespace Jega.BlueGravity
 {
-    public class UIInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class UIInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+
     {
         public static SlotSwitch OnRequestSlotSwitch;
-        public delegate void SlotSwitch(InventoryManager inventoryManager, UIInventorySlot original, UIInventorySlot destination);
+        public delegate void SlotSwitch(Inventory inventoryManager, UIInventorySlot original, UIInventorySlot destination);
 
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI textMesh;
         [SerializeField] private Vector2 draggingOffset;
+        [Header("Shop interactions")]
+        [SerializeField] private bool isShop;
+        [SerializeField] private Image unAvailable;
+        [SerializeField] private GameObject pricePopUp;
+        [SerializeField] private TextMeshProUGUI priceText;
 
-        private InventoryManager inventoryManager;
+        private InventoryItem inventoryItem;
         private RectTransform iconTransform;
         private Vector2 originalPosition;
         private bool isEmpty;
 
-        public InventoryManager InventoryManager => inventoryManager;
+        private SessionService sessionService;
+        private Inventory inventoryManager;
+
+        public Inventory InventoryManager => inventoryManager;
+        private bool IsShopActive => sessionService.IsShopActive;
+        private List<ShopInventory.ItemPrices> shopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
 
         private void Awake()
         {
+            sessionService = ServiceProvider.GetService<SessionService>(); 
             iconTransform = iconImage.GetComponent<RectTransform>();
             originalPosition = iconTransform.anchoredPosition;
+            unAvailable.gameObject.SetActive(false);
+            pricePopUp.SetActive(false);
         }
-        public void UpdateInfo(InventoryManager manager, InventoryManager.ItemPair itemPair, string customSaveKey)
+        public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey)
         {
             isEmpty = true;
             iconTransform.anchoredPosition = originalPosition;
@@ -47,12 +60,20 @@ namespace Jega.BlueGravity
                 }
             }
 
+            inventoryItem = itemPair.Item;
             inventoryManager = manager;
         }
 
+        public void UpdateAvailability()
+        {
+            if (!sessionService.IsShopActive) return;
+            int catalogIndex = inventoryItem != null ? shopCatalog.FindIndex(a => a.Item == inventoryItem) : -1;
+            unAvailable.gameObject.SetActive(catalogIndex == -1);
+        }
+        #region Draging Behavior
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (isEmpty) return;
+            if (isEmpty || IsShopActive) return;
 
             iconTransform.SetParent(inventoryManager.transform, false);
             iconTransform.SetAsLastSibling();
@@ -61,13 +82,13 @@ namespace Jega.BlueGravity
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (isEmpty) return;
+            if (isEmpty || IsShopActive) return;
             iconImage.transform.position = eventData.position + draggingOffset;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (isEmpty) return;
+            if (isEmpty || IsShopActive) return;
 
             iconTransform.SetParent(transform, false);
             iconTransform.SetAsFirstSibling();
@@ -78,6 +99,29 @@ namespace Jega.BlueGravity
                 OnRequestSlotSwitch?.Invoke(inventoryManager, this, newSlot);
             else
                 iconTransform.anchoredPosition = originalPosition;
+        }
+
+        #endregion
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (isEmpty || !IsShopActive) return;
+            int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
+            if(catalogIndex == -1) return;
+
+            pricePopUp.gameObject.SetActive(true);
+            int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
+            priceText.text = price.ToString();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (pricePopUp.gameObject.activeSelf)
+                pricePopUp.gameObject.gameObject.SetActive(false);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Jega.BlueGravity.PreWrittenCode
     public class UIStateButton : MonoBehaviour
     {
         [SerializeField] private UIState targetState;
+        [SerializeField] private bool isToggle;
         [SerializeField] private bool isRemoveState;
         private Button button;
         private UIService uiService;
@@ -19,10 +20,20 @@ namespace Jega.BlueGravity.PreWrittenCode
 
         private void ChangeState()
         {
-            if (!isRemoveState)
-                uiService.RequestNewUIState(targetState);
+            if (isToggle)
+            {
+                if(uiService.ActiveUIStates.Contains(targetState))
+                    uiService.RequestRemoveUIState(targetState);
+                else
+                    uiService.RequestNewUIState(targetState);
+            }
             else
-                uiService.RequestRemoveUIState(targetState);
+            {
+                if (!isRemoveState)
+                    uiService.RequestNewUIState(targetState);
+                else
+                    uiService.RequestRemoveUIState(targetState);
+            }
         }
     }
 }

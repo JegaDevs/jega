@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Jega.BlueGravity
 {
-    public class InventoryManager : MonoBehaviour
+    public class Inventory : MonoBehaviour
     {
         [Header("Game Design Params")]
         [SerializeField] private List<ItemPair> startingItems;
@@ -20,7 +20,7 @@ namespace Jega.BlueGravity
         [SerializeField] private List<Slot> slots;
 
         private const string slotSaveKey = "_Slot_";
-        private void Awake()
+        protected virtual void Awake()
         {
             InitialInvetorySetup();
             UIInventorySlot.OnRequestSlotSwitch += SwitchSlots;
@@ -74,24 +74,24 @@ namespace Jega.BlueGravity
                         itemPair.Item.SetCustomSavedAmount(inventorySaveKey, itemPair.StartingAmount);
                         int storedItemIndex = itemCollection.Collection.IndexOf(itemPair.Item);
                         slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, inventorySaveKey, storedItemIndex);
-                        slots[i].UISlot.UpdateInfo(this, itemPair, inventorySaveKey);
+                        UpdateSlotVisual(slots[i].UISlot, itemPair);
                         break;
                     }
                 }
             }
-            Debug.Log("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
+            Debug.LogError("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
 
         private UIInventorySlot CreateNewSlot(ItemPair itemPair, int index)
         {
             UIInventorySlot uiSlot = Instantiate(slotPrefab, slotsParent);
-            uiSlot.UpdateInfo(this, itemPair, inventorySaveKey);
+            UpdateSlotVisual(uiSlot, itemPair);
             uiSlot.name = slotPrefab.name + index;
             return uiSlot;
         }
         #endregion
 
-        void SwitchSlots(InventoryManager inventoryManager, UIInventorySlot original, UIInventorySlot destination)
+        void SwitchSlots(Inventory inventoryManager, UIInventorySlot original, UIInventorySlot destination)
         {
             if (inventoryManager != this) return;
 
@@ -101,8 +101,13 @@ namespace Jega.BlueGravity
             slots[originSlot.Index] = new Slot(originSlot.UISlot, originSlot.Index, destinationSlot.ItemPair, inventorySaveKey, destinationSlot.ItemIndex);
             slots[destinationSlot.Index] = new Slot(destinationSlot.UISlot, destinationSlot.Index, originSlot.ItemPair, inventorySaveKey, originSlot.ItemIndex);
 
-            original.UpdateInfo(this, slots[originSlot.Index].ItemPair, inventorySaveKey);
-            destination.UpdateInfo(this, slots[destinationSlot.Index].ItemPair, inventorySaveKey);
+            UpdateSlotVisual(original, slots[originSlot.Index].ItemPair);
+            UpdateSlotVisual(destination, slots[destinationSlot.Index].ItemPair);
+        }
+
+        protected virtual void UpdateSlotVisual(UIInventorySlot slotVisual, ItemPair itemPair)
+        {
+            slotVisual.UpdateInfo(this, itemPair, inventorySaveKey);
         }
 
         #region public straucks
