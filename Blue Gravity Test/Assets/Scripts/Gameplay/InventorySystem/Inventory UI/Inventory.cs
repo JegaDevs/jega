@@ -163,15 +163,17 @@ namespace Jega.BlueGravity
         {
             if (inventoryOrigin != this && inventoryDestination != this) return;
 
+            bool isThisClothingInventory = this is ClothingInventory;
+            bool isThisPlayerInventory = this is not ClothingInventory;
             if (inventoryOrigin == this)
             {
                 LoseItemAmount(itemOrigin, 1);
-                if (itemDest != null)
+                if (itemDest != null && isThisPlayerInventory)
                     GainItemAmount(itemDest, 1);
             }
             else
             {
-                if (itemDest != null)
+                if (itemDest != null && isThisClothingInventory)
                     LoseItemAmount(itemDest, 1);
 
                 GainItemAmount(itemOrigin, 1);

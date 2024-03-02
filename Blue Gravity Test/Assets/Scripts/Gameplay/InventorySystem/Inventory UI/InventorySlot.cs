@@ -140,7 +140,7 @@ namespace Jega.BlueGravity
                         sucess = true;
                         
                     }
-                    else if (isOriginClothingInventory && !isDestinationClothingInventory && InventoryItem != newSlot.InventoryItem)
+                    else if (isOriginClothingInventory && !isDestinationClothingInventory)
                     {
                         OnRequestClothingInventorySwitch(inventoryManager, newSlot.inventoryManager, InventoryItem, newSlot.inventoryItem);
                         sucess = true;
