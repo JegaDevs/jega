@@ -1,4 +1,4 @@
-namespace Jega.PreWrittenCode
+namespace Jega.BlueGravity.PreWrittenCode
 {
     public interface IService
     {
