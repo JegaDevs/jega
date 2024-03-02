@@ -7,12 +7,14 @@ namespace Jega.BlueGravity
     public abstract class InventoryItem : ScriptableObject
     {
         public Sprite Icon;
-        public int StartingAmount;
 
-        public int CurrentAmount
+        public int GetCustomSavedAmount(string customKey, int startingAmount = 0)
         {
-            get => PlayerPrefs.GetInt(name + "_ItemAmount", StartingAmount);
-            set => PlayerPrefs.SetInt(name + "_ItemAmount", StartingAmount);
+            return PlayerPrefs.GetInt(customKey + name + "_ItemAmount", startingAmount);
+        }
+        public void SetCustomSavedAmount(string customKey, int startingAmount = 0)
+        {
+            PlayerPrefs.SetInt(customKey + name + "_ItemAmount", startingAmount);
         }
 
     }

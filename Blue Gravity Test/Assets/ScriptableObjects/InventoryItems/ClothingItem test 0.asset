@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a4b6399f3311c4195d044669704eb0, type: 3}
   m_Name: ClothingItem test 0
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  StartingAmount: 1
+  Icon: {fileID: -1540135791, guid: fb33ce97d5c61b945957f9e9f04671bf, type: 3}
