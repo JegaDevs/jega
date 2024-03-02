@@ -17,6 +17,6 @@ MonoBehaviour:
     StartingAmount: 2
   - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
     StartingAmount: 2
-  numberOfSlots: 36
+  numberOfSlots: 6
   itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
   inventorySaveKey: ShopInventory
