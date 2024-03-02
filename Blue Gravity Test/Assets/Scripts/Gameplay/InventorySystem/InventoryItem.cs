@@ -12,9 +12,9 @@ namespace Jega.BlueGravity
         {
             return PlayerPrefs.GetInt(customKey + name + "_ItemAmount", startingAmount);
         }
-        public void SetCustomSavedAmount(string customKey, int amount)
+        public void SetCustomSavedAmount(string customKey, int startingAmount)
         {
-            PlayerPrefs.SetInt(customKey + name + "_ItemAmount", amount);
+            PlayerPrefs.SetInt(customKey + name + "_ItemAmount", startingAmount);
         }
 
     }

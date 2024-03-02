@@ -26,6 +26,8 @@ namespace Jega.BlueGravity
             int yMovement = (int)inputService.LastPerformedInput.y;
             foreach(Animator animator in animators) 
             {
+                if (animator.runtimeAnimatorController == null)
+                    continue;
                 animator.SetFloat(velocityParam, velocity);
                 animator.SetInteger(xMovementParam, xMovement);
                 animator.SetInteger(yMovementParam, yMovement);

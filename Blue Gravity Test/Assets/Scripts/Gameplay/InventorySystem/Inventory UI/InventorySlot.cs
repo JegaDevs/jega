@@ -12,9 +12,11 @@ namespace Jega.BlueGravity
     public class InventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public static SlotSwitch OnRequestSlotSwitch;
+        public static SlotSwitchInventories OnRequestClothingInventorySwitch;
         public static ItemTransaction OnItemBought;
         public static ItemTransaction OnItemSold;
-        public delegate void SlotSwitch(Inventory inventory, InventorySlot original, InventorySlot destination);
+        public delegate void SlotSwitch(Inventory inventory, InventorySlot slotOrigin, InventorySlot slotDestination);
+        public delegate void SlotSwitchInventories(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest);
         public delegate void ItemTransaction(Inventory shopInventory, InventoryItem item, int amount);
 
         [SerializeField] private Image iconImage;
@@ -27,15 +29,17 @@ namespace Jega.BlueGravity
         [SerializeField] private GameObject notAffordableIndicador;
         [SerializeField] private TextMeshProUGUI priceText;
 
-        private InventoryItem inventoryItem;
         private RectTransform iconTransform;
         private Vector2 originalPosition;
         private bool isEmpty;
 
         private SessionService sessionService;
         private Inventory inventoryManager;
+        private InventoryItem inventoryItem;
+        private int slotIndex;
 
         public Inventory InventoryManager => inventoryManager;
+        public InventoryItem InventoryItem => inventoryItem;
         private bool IsShopActive => sessionService.IsShopActive;
         private List<ShopInventory.ItemPrices> shopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
 
@@ -47,7 +51,7 @@ namespace Jega.BlueGravity
             unAvailable.gameObject.SetActive(false);
             pricePopUp.SetActive(false);
         }
-        public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey)
+        public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
             isEmpty = true;
             iconTransform.anchoredPosition = originalPosition;
@@ -66,6 +70,7 @@ namespace Jega.BlueGravity
 
             inventoryItem = itemPair.Item;
             inventoryManager = manager;
+            this.slotIndex = slotIndex;
         }
 
         public void UpdateAvailability()
@@ -90,7 +95,7 @@ namespace Jega.BlueGravity
         {
             if (isEmpty || IsShopActive) return;
 
-            iconTransform.SetParent(inventoryManager.transform, false);
+            iconTransform.SetParent(inventoryManager.transform.parent, false);
             iconTransform.SetAsLastSibling();
             textMesh.gameObject.SetActive(false);
         }
@@ -111,13 +116,29 @@ namespace Jega.BlueGravity
 
             GameObject destination = eventData.pointerCurrentRaycast.gameObject;
             if (destination != null && destination.TryGetComponent(out InventorySlot newSlot) && newSlot != this)
-                OnRequestSlotSwitch?.Invoke(inventoryManager, this, newSlot);
+            {
+                if(inventoryManager == newSlot.inventoryManager && inventoryManager is not ClothingInventory)
+                    OnRequestSlotSwitch?.Invoke(inventoryManager, this, newSlot);
+                else
+                {
+                    if(newSlot.inventoryManager is ClothingInventory clothingInventory && inventoryManager is not ClothingInventory)
+                    {
+                        if (clothingInventory.CheckIfSwitchIsValid(inventoryItem, newSlot.slotIndex))
+                            OnRequestClothingInventorySwitch(inventoryManager, clothingInventory, InventoryItem, newSlot.inventoryItem);
+                        else
+                            iconTransform.anchoredPosition = originalPosition;
+                    }
+                    else if (inventoryManager is ClothingInventory && newSlot.inventoryManager is not ClothingInventory)
+                            OnRequestClothingInventorySwitch(inventoryManager, newSlot.inventoryManager, InventoryItem, newSlot.inventoryItem);
+                }
+            }
             else
                 iconTransform.anchoredPosition = originalPosition;
         }
 
         #endregion
 
+        #region Shop Interactions
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (isEmpty || !IsShopActive) return;
@@ -158,5 +179,6 @@ namespace Jega.BlueGravity
                 OnItemSold?.Invoke(inventoryManager, shopCatalog[catalogIndex].Item, 1);
             }
         }
+        #endregion
     }
 }
