@@ -17,8 +17,9 @@ namespace Jega.BlueGravity.PreWrittenCode
             {
 #if UNITY_EDITOR
                 return AssetDatabase.IsValidFolder(CoreAssetsPath);
-#endif
+#else
                 return false;
+#endif
             }
         }
 

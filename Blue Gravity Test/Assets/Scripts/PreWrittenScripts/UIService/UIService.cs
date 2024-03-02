@@ -1,5 +1,4 @@
 using Jega.BlueGravity.PreWrittenCode;
-using Jega.PreWrittenCode;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
