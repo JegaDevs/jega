@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: -1501700983, guid: 5a902fa51819ff94b93e705e8921655c, type: 3}
   Type: 1
-  AnimatorController: {fileID: 0}
+  AnimatorController: {fileID: 22100000, guid: d0a7c9297f34a934f8db5994d7fb9a53, type: 2}

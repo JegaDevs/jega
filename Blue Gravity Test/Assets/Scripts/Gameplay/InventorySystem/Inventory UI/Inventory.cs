@@ -225,7 +225,7 @@ namespace Jega.BlueGravity
                 }
             }
         }
-        private void LoseItemAmount(InventoryItem item, int amount)
+        protected virtual void LoseItemAmount(InventoryItem item, int amount)
         {
             int slotIndex = slots.FindIndex(a => a.Item == item);
             int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);

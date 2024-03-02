@@ -343,8 +343,9 @@ GameObject:
   m_Component:
   - component: {fileID: 169310405}
   - component: {fileID: 169310406}
+  - component: {fileID: 169310407}
   m_Layer: 0
-  m_Name: Hair
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,6 +418,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &169310407
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169310404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &180993852
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,9 +775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4397378d45e3ae04ba538b94a8ede146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animators:
-  - {fileID: 36366740}
-  - {fileID: 95661717}
+  baseAnimator: {fileID: 36366740}
+  headAnimator: {fileID: 169310407}
+  bodyAnimator: {fileID: 95661717}
   xMovementParam: DirectionX
   yMovementParam: DirectionY
   velocityParam: Velocity

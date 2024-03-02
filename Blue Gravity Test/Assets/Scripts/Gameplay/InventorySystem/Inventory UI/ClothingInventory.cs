@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,12 @@ namespace Jega.BlueGravity
 {
     public class ClothingInventory : Inventory
     {
-        private const int HeadSlotIndex = 0;
-        private const int BodySlotIndex = 1;
+        public static Action OnClothingInventoryUpdated;
+
+        public const int HeadSlotIndex = 0;
+        public const int BodySlotIndex = 1;
+
+        public List<Slot> Slots => slots;
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -24,6 +29,7 @@ namespace Jega.BlueGravity
                 return slotIndex == BodySlotIndex;
         }
 
+
         protected override void GainItemAmount(InventoryItem item, int amount)
         {
             int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);
@@ -37,6 +43,7 @@ namespace Jega.BlueGravity
                 else
                     SetSlot(HeadSlotIndex, itemPair);
             }
+            OnClothingInventoryUpdated?.Invoke();
 
             void SetSlot(int slotIndex, ItemPair itemPair)
             {
@@ -45,6 +52,12 @@ namespace Jega.BlueGravity
                 slots[slotIndex] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
                 UpdateSlotVisual(slots[BodySlotIndex].UISlot, itemPair, slotIndex);
             }
+        }
+
+        protected override void LoseItemAmount(InventoryItem item, int amount)
+        {
+            base.LoseItemAmount(item, amount);
+            OnClothingInventoryUpdated?.Invoke();
         }
     }
 }
