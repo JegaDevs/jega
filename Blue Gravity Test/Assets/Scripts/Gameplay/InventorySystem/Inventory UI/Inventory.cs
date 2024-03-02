@@ -123,8 +123,11 @@ namespace Jega.BlueGravity
                 InventoryItem storedItem = ItemCollection[storedItemIndex];
                 int startingItemIndex = StartingItems.FindIndex(a => a.Item == storedItem);
                 int startingAmount = startingItemIndex >= 0 ? StartingItems[startingItemIndex].StartingAmount : 0;
-                if (storedItem.GetCustomSavedAmount(InventorySaveKey, startingAmount) > 0)
+                int ownedAmount = storedItem.GetCustomSavedAmount(InventorySaveKey, startingAmount);
+                if (ownedAmount > 0)
                     itemPair = new ItemPair(storedItem, startingAmount);
+                else
+                    storedItemIndex = -1;
             }
             slots[slotIndex] = new Slot(slot.UISlot, slot.Index, itemPair, InventorySaveKey, storedItemIndex);
             UpdateSlotVisual(slot.UISlot, itemPair);
