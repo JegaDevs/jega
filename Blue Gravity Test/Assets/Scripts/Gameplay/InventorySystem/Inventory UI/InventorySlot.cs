@@ -180,19 +180,26 @@ namespace Jega.BlueGravity
             if (catalogIndex == -1) return;
 
             int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
+            InventoryItem item = inventoryItem;
 
             if (isShop)
             {
+                if (!sessionService.CurrentClientInventory.GetHasSpaceForTransaction(item))
+                    return;
+
                 if(sessionService.CurrentCoins >= price)
                 {
                     sessionService.CurrentCoins -= price;
-                    OnItemBought?.Invoke(inventoryManager, shopCatalog[catalogIndex].Item, 1);
+                    OnItemBought?.Invoke(inventoryManager, item, 1);
                 }
             }
             else
             {
+                if (!inventoryManager.GetHasSpaceForTransaction(item))
+                    return;
+
                 sessionService.CurrentCoins += price;
-                OnItemSold?.Invoke(inventoryManager, shopCatalog[catalogIndex].Item, 1);
+                OnItemSold?.Invoke(inventoryManager, item, 1);
             }
         }
         #endregion
