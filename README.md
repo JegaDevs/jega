@@ -7,7 +7,7 @@ You can download the executable version here: [Zip File](https://drive.google.co
 Inputs:
 
 - Movement: WASD or Arrow keys
-- Open Invenotry -> UI Button, I, Space, or Enter
+- Open Inventory -> UI Button, I, Space, or Enter
 - Interact with items: mouse click and drag
 
 
