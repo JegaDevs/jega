@@ -1,12 +1,10 @@
 using Jega.BlueGravity.InventorySystem;
 using Jega.BlueGravity.PreWrittenCode;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Jega.BlueGravity.InventorySystem.Inventory;
 
 namespace Jega.BlueGravity
 {
@@ -38,7 +36,7 @@ namespace Jega.BlueGravity
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
-            inventorySlot = GetComponent<InventorySlot>();  
+            inventorySlot = GetComponent<InventorySlot>();
             iconTransform = iconImage.GetComponent<RectTransform>();
             originalPosition = iconTransform.anchoredPosition;
 
@@ -121,7 +119,7 @@ namespace Jega.BlueGravity
             iconTransform.SetParent(transform, false);
             iconTransform.SetAsFirstSibling();
             textMesh.gameObject.SetActive(true);
-            if(!sucess)
+            if (!sucess)
                 ResetIconPosition();
         }
 

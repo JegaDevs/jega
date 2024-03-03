@@ -1,10 +1,8 @@
 using Jega.BlueGravity.PreWrittenCode;
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Jega.BlueGravity.InventorySystem
 {

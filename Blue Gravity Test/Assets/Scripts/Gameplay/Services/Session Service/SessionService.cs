@@ -1,7 +1,7 @@
+using Jega.BlueGravity.InventorySystem;
 using Jega.BlueGravity.PreWrittenCode;
 using System;
 using UnityEngine;
-using Jega.BlueGravity.InventorySystem;
 
 namespace Jega.BlueGravity
 {
