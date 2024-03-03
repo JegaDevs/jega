@@ -1,6 +1,6 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
 
 namespace Jega.BlueGravity.PreWrittenCode
 {

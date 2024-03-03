@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using static Jega.BlueGravity.Inventory;
 
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     public class ClothingInventory : Inventory
     {
@@ -23,7 +20,7 @@ namespace Jega.BlueGravity
         public bool CheckIfSwitchIsValid(InventoryItem item, int slotIndex)
         {
             if (item is not ClothingItem clothing) return false;
-            if(clothing.Type == ClothingItem.ClothingType.Head)
+            if (clothing.Type == ClothingItem.ClothingType.Head)
                 return slotIndex == HeadSlotIndex;
             else
                 return slotIndex == BodySlotIndex;

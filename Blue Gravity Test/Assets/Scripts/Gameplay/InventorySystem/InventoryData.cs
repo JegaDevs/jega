@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Jega.BlueGravity.Inventory;
 
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     [CreateAssetMenu(fileName = "Inventory Data", menuName = "BlueGravity/InventoryData")]
     public class InventoryData : ScriptableObject
     {
         [Header("Game Design Params")]
-        public List<ItemPair> startingItems;
+        public List<Inventory.ItemPair> startingItems;
         public int numberOfSlots;
 
         [Header("Programming Params")]

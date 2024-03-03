@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     [CreateAssetMenu(fileName = "ClothingItem", menuName = "BlueGravity/ClothingItem")]
     public class ClothingItem : InventoryItem

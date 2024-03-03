@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfe9401a60d8d8a438a4f0465a0d998b, type: 3}
-  m_Name: Shop
+  m_Name: Shop 2
   m_EditorClassIdentifier: 
   Layer: 1

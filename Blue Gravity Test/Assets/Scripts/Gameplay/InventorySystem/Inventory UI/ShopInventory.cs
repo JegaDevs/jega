@@ -1,11 +1,8 @@
-using Jega.BlueGravity.PreWrittenCode;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     public class ShopInventory : Inventory
     {

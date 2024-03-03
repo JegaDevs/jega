@@ -1,12 +1,10 @@
 using Jega.BlueGravity.PreWrittenCode;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using static Jega.BlueGravity.Inventory;
 
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     public class Inventory : MonoBehaviour
     {
@@ -50,8 +48,8 @@ namespace Jega.BlueGravity
         {
             slots = new List<Slot>();
             List<ItemPair> unfilledItemPairs = new List<ItemPair>();
-            foreach(ItemPair itemPair in StartingItems)
-                if(itemPair.Item.GetCustomSavedAmount(InventorySaveKey, itemPair.StartingAmount) > 0)
+            foreach (ItemPair itemPair in StartingItems)
+                if (itemPair.Item.GetCustomSavedAmount(InventorySaveKey, itemPair.StartingAmount) > 0)
                     unfilledItemPairs.Add(itemPair);
 
             //Fill saved slots
@@ -75,7 +73,7 @@ namespace Jega.BlueGravity
             }
 
 
-            if (unfilledItemPairs.Count <= 0) 
+            if (unfilledItemPairs.Count <= 0)
                 return;
 
             //Fill unsaved slots (should happen only once to fill initial values on a clear save)
@@ -110,7 +108,7 @@ namespace Jega.BlueGravity
             int count = slots.Count;
             for (int i = 0; i < count; i++)
                 UpdateTargetSlot(i);
-            
+
         }
         protected void UpdateTargetSlot(int slotIndex)
         {
@@ -183,12 +181,12 @@ namespace Jega.BlueGravity
 
         private void CheckItemBought(Inventory shopIventory, InventoryItem item, int amount)
         {
-            if(this == sessionService.CurrentClientInventory)
+            if (this == sessionService.CurrentClientInventory)
                 GainItemAmount(item, amount);
-            
-            else if(this == sessionService.CurrentShopInventory)
+
+            else if (this == sessionService.CurrentShopInventory)
                 LoseItemAmount(item, amount);
-            
+
         }
         private void CheckItemSold(Inventory shopIventory, InventoryItem item, int amount)
         {
@@ -241,7 +239,7 @@ namespace Jega.BlueGravity
             if (ownedIndex > 0)
                 return true;
 
-            foreach(Slot slot in slots)
+            foreach (Slot slot in slots)
                 if (slot.IsEmpty)
                     return true;
 
@@ -264,7 +262,7 @@ namespace Jega.BlueGravity
                 ItemIndex = itemIndex;
 
                 PlayerPrefs.SetInt(customSlotSaveKey + SlotSaveKey + slotIndex, itemIndex);
-                
+
             }
 
             public InventoryItem Item => ItemPair.Item;

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e06b58525d86c47bf865b9437be600, type: 3}
+  m_Name: Shop 1 Inventory Data
+  m_EditorClassIdentifier: 
+  startingItems:
+  - Item: {fileID: 11400000, guid: 1e7c6919ec4cd914ab8ad83f32223dd8, type: 2}
+    StartingAmount: 1
+  - Item: {fileID: 11400000, guid: 918a5be669f76c441ad072211339c85c, type: 2}
+    StartingAmount: 2
+  - Item: {fileID: 11400000, guid: 9e591d870dbbf31458fed3f4497d597a, type: 2}
+    StartingAmount: 3
+  - Item: {fileID: 11400000, guid: 8613a15d15abb154eb44a65471b0954b, type: 2}
+    StartingAmount: 4
+  - Item: {fileID: 11400000, guid: 0e292b5c360f9b84e9cdc6bc048777ae, type: 2}
+    StartingAmount: 5
+  - Item: {fileID: 11400000, guid: 60f48dc4d3cd00943a733510044baabd, type: 2}
+    StartingAmount: 6
+  numberOfSlots: 6
+  itemCollection: {fileID: 11400000, guid: 0739e9efb3a4abf49a5154e016b8e390, type: 2}
+  inventorySaveKey: Shop1Inventory

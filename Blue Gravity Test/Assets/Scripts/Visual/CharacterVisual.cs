@@ -1,7 +1,6 @@
 using Jega.BlueGravity.PreWrittenCode;
 using Jega.BlueGravity.Services;
-using NaughtyAttributes;
-using System.Collections;
+using Jega.BlueGravity.InventorySystem;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,7 +42,7 @@ namespace Jega.BlueGravity
             float velocity = inputService.MovementVector.sqrMagnitude;
             int xMovement = (int)inputService.LastPerformedInput.x;
             int yMovement = (int)inputService.LastPerformedInput.y;
-            foreach(Animator animator in animators) 
+            foreach (Animator animator in animators)
             {
                 if (animator.runtimeAnimatorController == null)
                     continue;

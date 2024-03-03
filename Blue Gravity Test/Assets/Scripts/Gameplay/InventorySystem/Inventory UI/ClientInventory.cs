@@ -1,10 +1,4 @@
-using Jega.BlueGravity.PreWrittenCode;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static Jega.BlueGravity.Inventory;
-
-namespace Jega.BlueGravity
+namespace Jega.BlueGravity.InventorySystem
 {
     public class ClientInventory : Inventory
     {

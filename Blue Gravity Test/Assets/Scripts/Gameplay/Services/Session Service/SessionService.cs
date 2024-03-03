@@ -1,8 +1,7 @@
 using Jega.BlueGravity.PreWrittenCode;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Jega.BlueGravity.InventorySystem;
 
 namespace Jega.BlueGravity
 {
@@ -36,7 +35,7 @@ namespace Jega.BlueGravity
         }
 
 
-        public void RegisterActiveShopInventory(ShopInventory shopInventory) 
+        public void RegisterActiveShopInventory(ShopInventory shopInventory)
         {
             currentShopInventory = shopInventory;
         }
@@ -55,7 +54,7 @@ namespace Jega.BlueGravity
             currentClientInventory = null;
         }
 
-        public void RegisterClothingInventory (ClothingInventory inventory)
+        public void RegisterClothingInventory(ClothingInventory inventory)
         {
             clothingInventory = inventory;
         }

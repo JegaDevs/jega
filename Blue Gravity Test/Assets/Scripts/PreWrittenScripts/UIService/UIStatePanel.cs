@@ -37,11 +37,11 @@ namespace Jega.BlueGravity.PreWrittenCode
 
         }
         protected virtual void TogglePannel(bool toggle)
-        { 
+        {
             if (gameObject.activeSelf == toggle)
                 return;
             gameObject.SetActive(toggle);
-            
+
         }
         private bool GetIsStateActive()
         {
