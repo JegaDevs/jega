@@ -3,7 +3,7 @@ guid: 5eb41a1dce69de244abf542e8cdec5f5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,12 +63,10 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
-  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -77,7 +74,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -90,7 +86,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -103,7 +98,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -116,7 +110,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -129,7 +122,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -142,7 +134,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1503,72 +1494,73 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      char_a_p1_1out_fstr_v04_0: 538897722
-      char_a_p1_1out_fstr_v04_1: -170510973
-      char_a_p1_1out_fstr_v04_10: 1404692107
-      char_a_p1_1out_fstr_v04_11: 466944337
-      char_a_p1_1out_fstr_v04_12: 1290566810
-      char_a_p1_1out_fstr_v04_13: -880640922
-      char_a_p1_1out_fstr_v04_14: -473501892
-      char_a_p1_1out_fstr_v04_15: 1012696302
-      char_a_p1_1out_fstr_v04_16: 190266179
-      char_a_p1_1out_fstr_v04_17: -777309950
-      char_a_p1_1out_fstr_v04_18: -72592925
       char_a_p1_1out_fstr_v04_19: -160576733
-      char_a_p1_1out_fstr_v04_2: -1766312655
-      char_a_p1_1out_fstr_v04_20: 1433629980
-      char_a_p1_1out_fstr_v04_21: -779612412
-      char_a_p1_1out_fstr_v04_22: 1793222758
-      char_a_p1_1out_fstr_v04_23: 808571124
-      char_a_p1_1out_fstr_v04_24: 1366381440
-      char_a_p1_1out_fstr_v04_25: -1484821370
-      char_a_p1_1out_fstr_v04_26: -981276671
-      char_a_p1_1out_fstr_v04_27: -1898499692
-      char_a_p1_1out_fstr_v04_28: 809995618
-      char_a_p1_1out_fstr_v04_29: -1167750900
-      char_a_p1_1out_fstr_v04_3: -1275260318
-      char_a_p1_1out_fstr_v04_30: -816466807
-      char_a_p1_1out_fstr_v04_31: 1106412784
-      char_a_p1_1out_fstr_v04_32: 527639491
-      char_a_p1_1out_fstr_v04_33: -1513316673
-      char_a_p1_1out_fstr_v04_34: 1140527951
-      char_a_p1_1out_fstr_v04_35: 386726855
-      char_a_p1_1out_fstr_v04_36: 846800158
+      char_a_p1_1out_fstr_v04_1: -170510973
       char_a_p1_1out_fstr_v04_37: 1010955213
-      char_a_p1_1out_fstr_v04_38: 757800987
-      char_a_p1_1out_fstr_v04_39: -1377212757
-      char_a_p1_1out_fstr_v04_4: 1175551520
-      char_a_p1_1out_fstr_v04_40: -80215820
-      char_a_p1_1out_fstr_v04_41: 616056694
-      char_a_p1_1out_fstr_v04_42: 1789657907
-      char_a_p1_1out_fstr_v04_43: 2068433128
-      char_a_p1_1out_fstr_v04_44: 1243823409
-      char_a_p1_1out_fstr_v04_45: 1496217517
-      char_a_p1_1out_fstr_v04_46: 1807324282
-      char_a_p1_1out_fstr_v04_47: -849035112
-      char_a_p1_1out_fstr_v04_48: -2068269727
-      char_a_p1_1out_fstr_v04_49: -574834161
-      char_a_p1_1out_fstr_v04_5: -776391975
-      char_a_p1_1out_fstr_v04_50: -1265086771
-      char_a_p1_1out_fstr_v04_51: -681164414
-      char_a_p1_1out_fstr_v04_52: 1384205272
-      char_a_p1_1out_fstr_v04_53: -605688218
-      char_a_p1_1out_fstr_v04_54: -1576730817
-      char_a_p1_1out_fstr_v04_55: 994824081
-      char_a_p1_1out_fstr_v04_56: -123988757
-      char_a_p1_1out_fstr_v04_57: 560848813
-      char_a_p1_1out_fstr_v04_58: 894774004
-      char_a_p1_1out_fstr_v04_59: -876660013
-      char_a_p1_1out_fstr_v04_6: 1531632025
-      char_a_p1_1out_fstr_v04_60: -698693186
-      char_a_p1_1out_fstr_v04_61: 1271632301
-      char_a_p1_1out_fstr_v04_62: -1317875173
-      char_a_p1_1out_fstr_v04_63: 130881272
-      char_a_p1_1out_fstr_v04_7: 1993836827
+      char_a_p1_1out_fstr_v04_12: 1290566810
+      char_a_p1_1out_fstr_v04_0: 538897722
       char_a_p1_1out_fstr_v04_8: 753176837
+      char_a_p1_1out_fstr_v04_17: -777309950
+      char_a_p1_1out_fstr_v04_20: 1433629980
+      char_a_p1_1out_fstr_v04_35: 386726855
+      char_a_p1_1out_fstr_v04_60: -698693186
+      char_a_p1_1out_fstr_v04_23: 808571124
+      char_a_p1_1out_fstr_v04_21: -779612412
+      char_a_p1_1out_fstr_v04_28: 809995618
+      char_a_p1_1out_fstr_v04_55: 994824081
+      char_a_p1_1out_fstr_v04_30: -816466807
+      char_a_p1_1out_fstr_v04_38: 757800987
+      char_a_p1_1out_fstr_v04_5: -776391975
+      char_a_p1_1out_fstr_v04_36: 846800158
+      char_a_p1_1out_fstr_v04_7: 1993836827
+      char_a_p1_1out_fstr_v04_47: -849035112
       char_a_p1_1out_fstr_v04_9: -284256462
-  mipmapLimitGroupName: 
+      char_a_p1_1out_fstr_v04_16: 190266179
+      char_a_p1_1out_fstr_v04_42: 1789657907
+      char_a_p1_1out_fstr_v04_40: -80215820
+      char_a_p1_1out_fstr_v04_51: -681164414
+      char_a_p1_1out_fstr_v04_45: 1496217517
+      char_a_p1_1out_fstr_v04_53: -605688218
+      char_a_p1_1out_fstr_v04_14: -473501892
+      char_a_p1_1out_fstr_v04_41: 616056694
+      char_a_p1_1out_fstr_v04_15: 1012696302
+      char_a_p1_1out_fstr_v04_22: 1793222758
+      char_a_p1_1out_fstr_v04_3: -1275260318
+      char_a_p1_1out_fstr_v04_49: -574834161
+      char_a_p1_1out_fstr_v04_39: -1377212757
+      char_a_p1_1out_fstr_v04_32: 527639491
+      char_a_p1_1out_fstr_v04_56: -123988757
+      char_a_p1_1out_fstr_v04_24: 1366381440
+      char_a_p1_1out_fstr_v04_61: 1271632301
+      char_a_p1_1out_fstr_v04_10: 1404692107
+      char_a_p1_1out_fstr_v04_2: -1766312655
+      char_a_p1_1out_fstr_v04_18: -72592925
+      char_a_p1_1out_fstr_v04_62: -1317875173
+      char_a_p1_1out_fstr_v04_48: -2068269727
+      char_a_p1_1out_fstr_v04_50: -1265086771
+      char_a_p1_1out_fstr_v04_59: -876660013
+      char_a_p1_1out_fstr_v04_13: -880640922
+      char_a_p1_1out_fstr_v04_6: 1531632025
+      char_a_p1_1out_fstr_v04_43: 2068433128
+      char_a_p1_1out_fstr_v04_27: -1898499692
+      char_a_p1_1out_fstr_v04_31: 1106412784
+      char_a_p1_1out_fstr_v04_52: 1384205272
+      char_a_p1_1out_fstr_v04_33: -1513316673
+      char_a_p1_1out_fstr_v04_11: 466944337
+      char_a_p1_1out_fstr_v04_34: 1140527951
+      char_a_p1_1out_fstr_v04_54: -1576730817
+      char_a_p1_1out_fstr_v04_46: 1807324282
+      char_a_p1_1out_fstr_v04_44: 1243823409
+      char_a_p1_1out_fstr_v04_58: 894774004
+      char_a_p1_1out_fstr_v04_25: -1484821370
+      char_a_p1_1out_fstr_v04_29: -1167750900
+      char_a_p1_1out_fstr_v04_57: 560848813
+      char_a_p1_1out_fstr_v04_4: 1175551520
+      char_a_p1_1out_fstr_v04_63: 130881272
+      char_a_p1_1out_fstr_v04_26: -981276671
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

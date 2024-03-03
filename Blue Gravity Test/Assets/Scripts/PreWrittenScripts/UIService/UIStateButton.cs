@@ -22,7 +22,7 @@ namespace Jega.BlueGravity.PreWrittenCode
         {
             if (isToggle)
             {
-                if(uiService.ActiveUIStates.Contains(targetState))
+                if (uiService.ActiveUIStates.Contains(targetState))
                     uiService.RequestRemoveUIState(targetState);
                 else
                     uiService.RequestNewUIState(targetState);

@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -1498,7 +1498,6 @@ TextureImporter:
       char_a_p1_4har_bob1_v01_16: -1715248844
       char_a_p1_4har_bob1_v01_21: -640321808
       char_a_p1_4har_bob1_v01_50: -1668836576
-      char_a_p1_4har_bob1_v01_58: -212371040
       char_a_p1_4har_bob1_v01_0: -1501700983
       char_a_p1_4har_bob1_v01_63: -1220606704
       char_a_p1_4har_bob1_v01_34: 1191259515
@@ -1542,17 +1541,18 @@ TextureImporter:
       char_a_p1_4har_bob1_v01_31: -723545079
       char_a_p1_4har_bob1_v01_51: 1981277607
       char_a_p1_4har_bob1_v01_53: -1396006586
+      char_a_p1_4har_bob1_v01_58: -212371040
       char_a_p1_4har_bob1_v01_40: -2017116240
-      char_a_p1_4har_bob1_v01_24: 608052120
       char_a_p1_4har_bob1_v01_23: 890487664
+      char_a_p1_4har_bob1_v01_24: 608052120
       char_a_p1_4har_bob1_v01_26: 1567313262
-      char_a_p1_4har_bob1_v01_45: -911964283
       char_a_p1_4har_bob1_v01_10: -1221730691
       char_a_p1_4har_bob1_v01_17: 937157419
+      char_a_p1_4har_bob1_v01_45: -911964283
       char_a_p1_4har_bob1_v01_14: 1557003962
-      char_a_p1_4har_bob1_v01_19: 1563949271
       char_a_p1_4har_bob1_v01_35: 315432705
       char_a_p1_4har_bob1_v01_57: 1492063153
+      char_a_p1_4har_bob1_v01_19: 1563949271
       char_a_p1_4har_bob1_v01_2: 1396737797
       char_a_p1_4har_bob1_v01_7: -1502966671
       char_a_p1_4har_bob1_v01_39: -1905032637

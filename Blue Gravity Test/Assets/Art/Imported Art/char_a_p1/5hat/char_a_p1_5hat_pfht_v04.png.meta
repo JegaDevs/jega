@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -1517,14 +1517,14 @@ TextureImporter:
       char_a_p1_5hat_pfht_v04_37: -1949831172
       char_a_p1_5hat_pfht_v04_19: 1838090765
       char_a_p1_5hat_pfht_v04_57: -1961060765
+      char_a_p1_5hat_pfht_v04_49: 326124850
       char_a_p1_5hat_pfht_v04_25: -463371000
       char_a_p1_5hat_pfht_v04_18: 153685417
       char_a_p1_5hat_pfht_v04_41: 2061126644
-      char_a_p1_5hat_pfht_v04_3: -2121798183
-      char_a_p1_5hat_pfht_v04_22: -1950846262
       char_a_p1_5hat_pfht_v04_31: 753860290
+      char_a_p1_5hat_pfht_v04_22: -1950846262
       char_a_p1_5hat_pfht_v04_38: -176142662
-      char_a_p1_5hat_pfht_v04_49: 326124850
+      char_a_p1_5hat_pfht_v04_3: -2121798183
       char_a_p1_5hat_pfht_v04_15: -762581955
       char_a_p1_5hat_pfht_v04_62: 314589313
       char_a_p1_5hat_pfht_v04_43: -356849096

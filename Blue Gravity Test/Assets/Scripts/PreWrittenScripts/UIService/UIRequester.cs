@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Jega.BlueGravity.PreWrittenCode 
+namespace Jega.BlueGravity.PreWrittenCode
 {
     public class UIRequester : MonoBehaviour
     {

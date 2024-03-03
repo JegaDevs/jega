@@ -17,9 +17,9 @@ namespace Jega.BlueGravity.PreWrittenCode
         /// <returns></returns>
         public static T GetAbstract<T>() where T : class, IService
         {
-            foreach(KeyValuePair<Type, IService> pair in Services)
+            foreach (KeyValuePair<Type, IService> pair in Services)
             {
-                if(pair.Value is T value) 
+                if (pair.Value is T value)
                     return value;
             }
             Debug.LogError("[ServiceProvider]: No concrete service initialized for this abstraction.");
@@ -35,18 +35,18 @@ namespace Jega.BlueGravity.PreWrittenCode
         {
             if (Services.TryGetValue(typeof(T), out IService service))
                 return service as T;
-            
+
             T nService = new T();
-            if(nService == null)
+            if (nService == null)
             {
                 Debug.LogError("[ServiceProvider]: Error while creating " + typeof(T).Name + " service.");
                 return null;
             }
-            Services.Add(typeof(T),nService);
+            Services.Add(typeof(T), nService);
             nService.Preprocess();
             return nService;
         }
-        
+
         /// <summary>
         /// Removes a  service, by calling PostProcess() then removing it from the list.
         /// </summary>

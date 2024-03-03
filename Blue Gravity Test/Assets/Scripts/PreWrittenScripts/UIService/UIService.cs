@@ -1,4 +1,3 @@
-using Jega.BlueGravity.PreWrittenCode;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -75,7 +74,7 @@ namespace Jega.BlueGravity.PreWrittenCode
             }
             else
             {
-                Debug.LogError("Tried to clear empty UI State: " + newState.name);
+                Debug.LogWarning("Tried to clear empty UI State: " + newState.name);
                 return;
             }
         }

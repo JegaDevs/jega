@@ -1,7 +1,5 @@
-using Jega.BlueGravity.Services;
 using Jega.BlueGravity.PreWrittenCode;
-using System.Collections;
-using System.Collections.Generic;
+using Jega.BlueGravity.Services;
 using UnityEngine;
 
 namespace Jega.BlueGravity
