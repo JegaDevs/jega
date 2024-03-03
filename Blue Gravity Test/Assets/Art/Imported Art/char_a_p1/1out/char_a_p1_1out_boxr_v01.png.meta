@@ -3,7 +3,7 @@ guid: fb33ce97d5c61b945957f9e9f04671bf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,8 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
-  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -77,7 +74,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -90,7 +86,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -103,7 +98,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -116,7 +110,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -129,7 +122,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -142,7 +134,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -173,7 +164,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_1
       rect:
         serializedVersion: 2
-        x: 256
+        x: 64
         y: 448
         width: 64
         height: 64
@@ -194,7 +185,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_2
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 448
         width: 64
         height: 64
@@ -215,7 +206,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_3
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 448
         width: 64
         height: 64
@@ -236,8 +227,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 384
+        x: 256
+        y: 448
         width: 64
         height: 64
       alignment: 0
@@ -257,8 +248,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 384
+        x: 320
+        y: 448
         width: 64
         height: 64
       alignment: 0
@@ -278,8 +269,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_6
       rect:
         serializedVersion: 2
-        x: 128
-        y: 384
+        x: 384
+        y: 448
         width: 64
         height: 64
       alignment: 0
@@ -299,8 +290,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_7
       rect:
         serializedVersion: 2
-        x: 192
-        y: 384
+        x: 448
+        y: 448
         width: 64
         height: 64
       alignment: 0
@@ -320,7 +311,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_8
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 384
         width: 64
         height: 64
@@ -341,7 +332,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_9
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 384
         width: 64
         height: 64
@@ -362,7 +353,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_10
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 384
         width: 64
         height: 64
@@ -383,7 +374,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_11
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 384
         width: 64
         height: 64
@@ -404,8 +395,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 320
+        x: 256
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -425,8 +416,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_13
       rect:
         serializedVersion: 2
-        x: 64
-        y: 320
+        x: 320
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -446,8 +437,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_14
       rect:
         serializedVersion: 2
-        x: 128
-        y: 320
+        x: 384
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -467,8 +458,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_15
       rect:
         serializedVersion: 2
-        x: 192
-        y: 320
+        x: 448
+        y: 384
         width: 64
         height: 64
       alignment: 0
@@ -488,7 +479,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_16
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 320
         width: 64
         height: 64
@@ -509,7 +500,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_17
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 320
         width: 64
         height: 64
@@ -530,7 +521,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_18
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 320
         width: 64
         height: 64
@@ -551,7 +542,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_19
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 320
         width: 64
         height: 64
@@ -572,8 +563,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 256
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -593,8 +584,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_21
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
+        x: 320
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -614,8 +605,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_22
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
+        x: 384
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -635,8 +626,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_23
       rect:
         serializedVersion: 2
-        x: 192
-        y: 256
+        x: 448
+        y: 320
         width: 64
         height: 64
       alignment: 0
@@ -656,7 +647,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_24
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 256
         width: 64
         height: 64
@@ -677,7 +668,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_25
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 256
         width: 64
         height: 64
@@ -698,7 +689,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_26
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 256
         width: 64
         height: 64
@@ -719,7 +710,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_27
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 256
         width: 64
         height: 64
@@ -740,8 +731,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_28
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 256
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -761,8 +752,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_29
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
+        x: 320
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -782,8 +773,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_30
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
+        x: 384
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -803,8 +794,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_31
       rect:
         serializedVersion: 2
-        x: 192
-        y: 192
+        x: 448
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -824,7 +815,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_32
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 192
         width: 64
         height: 64
@@ -845,7 +836,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_33
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 192
         width: 64
         height: 64
@@ -866,7 +857,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_34
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 192
         width: 64
         height: 64
@@ -887,7 +878,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_35
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 192
         width: 64
         height: 64
@@ -908,8 +899,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_36
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 256
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -929,8 +920,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_37
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
+        x: 320
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -950,8 +941,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_38
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
+        x: 384
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -971,8 +962,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_39
       rect:
         serializedVersion: 2
-        x: 192
-        y: 128
+        x: 448
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -992,7 +983,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_40
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 128
         width: 64
         height: 64
@@ -1013,7 +1004,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_41
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 128
         width: 64
         height: 64
@@ -1034,7 +1025,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_42
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 128
         width: 64
         height: 64
@@ -1055,7 +1046,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_43
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 128
         width: 64
         height: 64
@@ -1076,8 +1067,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_44
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 256
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -1097,8 +1088,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_45
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
+        x: 320
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -1118,8 +1109,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_46
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
+        x: 384
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -1139,8 +1130,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_47
       rect:
         serializedVersion: 2
-        x: 192
-        y: 64
+        x: 448
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -1160,7 +1151,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_48
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 64
         width: 64
         height: 64
@@ -1181,7 +1172,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_49
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 64
         width: 64
         height: 64
@@ -1202,7 +1193,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_50
       rect:
         serializedVersion: 2
-        x: 384
+        x: 128
         y: 64
         width: 64
         height: 64
@@ -1223,7 +1214,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_51
       rect:
         serializedVersion: 2
-        x: 448
+        x: 192
         y: 64
         width: 64
         height: 64
@@ -1244,8 +1235,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_52
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 256
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -1265,8 +1256,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_53
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 320
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -1286,8 +1277,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_54
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 384
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -1307,8 +1298,8 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_55
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
+        x: 448
+        y: 64
         width: 64
         height: 64
       alignment: 0
@@ -1328,7 +1319,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_56
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
         y: 0
         width: 64
         height: 64
@@ -1349,7 +1340,7 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_57
       rect:
         serializedVersion: 2
-        x: 320
+        x: 64
         y: 0
         width: 64
         height: 64
@@ -1370,6 +1361,90 @@ TextureImporter:
       name: char_a_p1_1out_boxr_v01_58
       rect:
         serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0706da3001e8eb74782437fdabc7ca4d
+      internalID: 870062555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_a_p1_1out_boxr_v01_59
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d958cfcc4e6d814292f189d4ca927a7
+      internalID: 1919116667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_a_p1_1out_boxr_v01_60
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acccc8b78457a214d960635bdc42ece1
+      internalID: 1301881310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_a_p1_1out_boxr_v01_61
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e94478d9fca8e49b22625c99e27290
+      internalID: 813675024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: char_a_p1_1out_boxr_v01_62
+      rect:
+        serializedVersion: 2
         x: 384
         y: 0
         width: 64
@@ -1381,14 +1456,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c97fbfea217b3a344a0cc99818783bf1
-      internalID: 870062555
+      spriteID: 76619613e108c3b4fa06458e5d8b26ea
+      internalID: -942561245
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_a_p1_1out_boxr_v01_59
+      name: char_a_p1_1out_boxr_v01_63
       rect:
         serializedVersion: 2
         x: 448
@@ -1402,8 +1477,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48ef513e2f5dc364280b55a07e85389a
-      internalID: 1919116667
+      spriteID: 556bf139e92762f4685a2370720899d7
+      internalID: 458992614
       vertices: []
       indices: 
       edges: []
@@ -1419,68 +1494,73 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      char_a_p1_1out_boxr_v01_0: -1540135791
-      char_a_p1_1out_boxr_v01_1: -1653196606
-      char_a_p1_1out_boxr_v01_10: -384344614
-      char_a_p1_1out_boxr_v01_11: 1997027123
-      char_a_p1_1out_boxr_v01_12: -1630106589
-      char_a_p1_1out_boxr_v01_13: -1240007967
-      char_a_p1_1out_boxr_v01_14: -551432405
-      char_a_p1_1out_boxr_v01_15: -331205334
-      char_a_p1_1out_boxr_v01_16: -1377382481
       char_a_p1_1out_boxr_v01_17: -2143544248
-      char_a_p1_1out_boxr_v01_18: 824179441
-      char_a_p1_1out_boxr_v01_19: 1440778587
-      char_a_p1_1out_boxr_v01_2: 926295153
-      char_a_p1_1out_boxr_v01_20: -1307562894
-      char_a_p1_1out_boxr_v01_21: -208716555
-      char_a_p1_1out_boxr_v01_22: -1713458057
-      char_a_p1_1out_boxr_v01_23: -1326523615
-      char_a_p1_1out_boxr_v01_24: 1139567964
-      char_a_p1_1out_boxr_v01_25: 1974697736
-      char_a_p1_1out_boxr_v01_26: 415633435
-      char_a_p1_1out_boxr_v01_27: -1388255059
-      char_a_p1_1out_boxr_v01_28: 657903952
-      char_a_p1_1out_boxr_v01_29: 1982843165
-      char_a_p1_1out_boxr_v01_3: 499075298
-      char_a_p1_1out_boxr_v01_30: 524813173
-      char_a_p1_1out_boxr_v01_31: -1235900370
       char_a_p1_1out_boxr_v01_32: 135290947
-      char_a_p1_1out_boxr_v01_33: -1732641293
-      char_a_p1_1out_boxr_v01_34: 1639177781
-      char_a_p1_1out_boxr_v01_35: 97313398
-      char_a_p1_1out_boxr_v01_36: 812373387
-      char_a_p1_1out_boxr_v01_37: -659933046
-      char_a_p1_1out_boxr_v01_38: -1570110492
-      char_a_p1_1out_boxr_v01_39: 1459533108
+      char_a_p1_1out_boxr_v01_21: -208716555
       char_a_p1_1out_boxr_v01_4: -983506496
-      char_a_p1_1out_boxr_v01_40: -1467240437
-      char_a_p1_1out_boxr_v01_41: -566516640
-      char_a_p1_1out_boxr_v01_42: 723613128
-      char_a_p1_1out_boxr_v01_43: -2115541690
-      char_a_p1_1out_boxr_v01_44: 804513639
-      char_a_p1_1out_boxr_v01_45: -661728274
-      char_a_p1_1out_boxr_v01_46: 1518692768
-      char_a_p1_1out_boxr_v01_47: -639614733
-      char_a_p1_1out_boxr_v01_48: 1027621161
-      char_a_p1_1out_boxr_v01_49: -206623340
-      char_a_p1_1out_boxr_v01_5: -1374134974
-      char_a_p1_1out_boxr_v01_50: 377862197
-      char_a_p1_1out_boxr_v01_51: 1877642894
-      char_a_p1_1out_boxr_v01_52: -1986246098
-      char_a_p1_1out_boxr_v01_53: 1588822995
-      char_a_p1_1out_boxr_v01_54: -728160714
+      char_a_p1_1out_boxr_v01_35: 97313398
+      char_a_p1_1out_boxr_v01_62: -942561245
+      char_a_p1_1out_boxr_v01_8: 1606254954
       char_a_p1_1out_boxr_v01_55: -2081716985
       char_a_p1_1out_boxr_v01_56: -146680145
-      char_a_p1_1out_boxr_v01_57: -433751139
-      char_a_p1_1out_boxr_v01_58: 870062555
-      char_a_p1_1out_boxr_v01_59: 1919116667
-      char_a_p1_1out_boxr_v01_6: 409170975
       char_a_p1_1out_boxr_v01_7: 945416437
-      char_a_p1_1out_boxr_v01_8: 1606254954
+      char_a_p1_1out_boxr_v01_48: 1027621161
       char_a_p1_1out_boxr_v01_9: 96526759
-  mipmapLimitGroupName: 
+      char_a_p1_1out_boxr_v01_54: -728160714
+      char_a_p1_1out_boxr_v01_34: 1639177781
+      char_a_p1_1out_boxr_v01_46: 1518692768
+      char_a_p1_1out_boxr_v01_58: 870062555
+      char_a_p1_1out_boxr_v01_14: -551432405
+      char_a_p1_1out_boxr_v01_60: 1301881310
+      char_a_p1_1out_boxr_v01_13: -1240007967
+      char_a_p1_1out_boxr_v01_23: -1326523615
+      char_a_p1_1out_boxr_v01_38: -1570110492
+      char_a_p1_1out_boxr_v01_31: -1235900370
+      char_a_p1_1out_boxr_v01_30: 524813173
+      char_a_p1_1out_boxr_v01_10: -384344614
+      char_a_p1_1out_boxr_v01_44: 804513639
+      char_a_p1_1out_boxr_v01_11: 1997027123
+      char_a_p1_1out_boxr_v01_36: 812373387
+      char_a_p1_1out_boxr_v01_18: 824179441
+      char_a_p1_1out_boxr_v01_25: 1974697736
+      char_a_p1_1out_boxr_v01_43: -2115541690
+      char_a_p1_1out_boxr_v01_51: 1877642894
+      char_a_p1_1out_boxr_v01_26: 415633435
+      char_a_p1_1out_boxr_v01_22: -1713458057
+      char_a_p1_1out_boxr_v01_15: -331205334
+      char_a_p1_1out_boxr_v01_45: -661728274
+      char_a_p1_1out_boxr_v01_2: 926295153
+      char_a_p1_1out_boxr_v01_24: 1139567964
+      char_a_p1_1out_boxr_v01_39: 1459533108
+      char_a_p1_1out_boxr_v01_61: 813675024
+      char_a_p1_1out_boxr_v01_19: 1440778587
+      char_a_p1_1out_boxr_v01_42: 723613128
+      char_a_p1_1out_boxr_v01_1: -1653196606
+      char_a_p1_1out_boxr_v01_57: -433751139
+      char_a_p1_1out_boxr_v01_37: -659933046
+      char_a_p1_1out_boxr_v01_3: 499075298
+      char_a_p1_1out_boxr_v01_27: -1388255059
+      char_a_p1_1out_boxr_v01_52: -1986246098
+      char_a_p1_1out_boxr_v01_63: 458992614
+      char_a_p1_1out_boxr_v01_28: 657903952
+      char_a_p1_1out_boxr_v01_49: -206623340
+      char_a_p1_1out_boxr_v01_6: 409170975
+      char_a_p1_1out_boxr_v01_53: 1588822995
+      char_a_p1_1out_boxr_v01_50: 377862197
+      char_a_p1_1out_boxr_v01_5: -1374134974
+      char_a_p1_1out_boxr_v01_29: 1982843165
+      char_a_p1_1out_boxr_v01_33: -1732641293
+      char_a_p1_1out_boxr_v01_40: -1467240437
+      char_a_p1_1out_boxr_v01_0: -1540135791
+      char_a_p1_1out_boxr_v01_59: 1919116667
+      char_a_p1_1out_boxr_v01_41: -566516640
+      char_a_p1_1out_boxr_v01_20: -1307562894
+      char_a_p1_1out_boxr_v01_12: -1630106589
+      char_a_p1_1out_boxr_v01_47: -639614733
+      char_a_p1_1out_boxr_v01_16: -1377382481
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

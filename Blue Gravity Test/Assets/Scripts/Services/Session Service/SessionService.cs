@@ -12,9 +12,11 @@ namespace Jega.BlueGravity
         public int Priority => 0;
         private ShopInventory currentShopInventory;
         private ClientInventory currentClientInventory;
+        private ClothingInventory clothingInventory;
 
         public ShopInventory CurrentShopInventory => currentShopInventory;
         public ClientInventory CurrentClientInventory => currentClientInventory;
+        public ClothingInventory ClothingInventory => clothingInventory;
         public bool IsShopActive => currentShopInventory != null;
 
         public int CurrentCoins
@@ -51,6 +53,11 @@ namespace Jega.BlueGravity
         public void UnregisterClientShopInventory()
         {
             currentClientInventory = null;
+        }
+
+        public void RegisterClothingInventory (ClothingInventory inventory)
+        {
+            clothingInventory = inventory;
         }
 
     }

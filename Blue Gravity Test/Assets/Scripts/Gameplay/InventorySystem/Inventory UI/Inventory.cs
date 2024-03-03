@@ -18,10 +18,10 @@ namespace Jega.BlueGravity
 
         protected SessionService sessionService;
 
-        private ReadOnlyCollection<InventoryItem> ItemCollection => inventoryData.itemCollection.Collection;
+        protected ReadOnlyCollection<InventoryItem> ItemCollection => inventoryData.itemCollection.Collection;
+        protected string InventorySaveKey => inventoryData.inventorySaveKey;
+        protected int NumberOfSlots => inventoryData.numberOfSlots;
         private List<ItemPair> StartingItems => inventoryData.startingItems;
-        private string InventorySaveKey => inventoryData.inventorySaveKey;
-        private int NumberOfSlots => inventoryData.numberOfSlots;
         private const string SlotSaveKey = "_Slot_";
 
         protected virtual void Awake()
@@ -29,14 +29,15 @@ namespace Jega.BlueGravity
             sessionService = ServiceProvider.GetService<SessionService>();
 
             InitialInvetorySetup();
-            InventorySlot.OnRequestSlotSwitch += SwitchSlots;
+            InventorySlot.OnRequestOwnedSlotsSwitch += SwitchOwnedSlots;
+            InventorySlot.OnRequestClothingInventorySwitch += HandleClothingEquiping;
             InventorySlot.OnItemBought += CheckItemBought;
             InventorySlot.OnItemSold += CheckItemSold;
         }
 
         protected virtual void OnDestroy()
         {
-            InventorySlot.OnRequestSlotSwitch -= SwitchSlots;
+            InventorySlot.OnRequestOwnedSlotsSwitch -= SwitchOwnedSlots;
         }
 
         protected virtual void OnEnable()
@@ -88,7 +89,7 @@ namespace Jega.BlueGravity
                         itemPair.Item.SetCustomSavedAmount(InventorySaveKey, itemPair.StartingAmount);
                         int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
                         slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
-                        UpdateSlotVisual(slots[i].UISlot, itemPair);
+                        UpdateSlotVisual(slots[i].UISlot, itemPair, i);
                         break;
                     }
                 }
@@ -99,19 +100,17 @@ namespace Jega.BlueGravity
         private InventorySlot CreateNewSlotVisual(ItemPair itemPair, int index)
         {
             InventorySlot uiSlot = Instantiate(slotPrefab, slotsParent);
-            UpdateSlotVisual(uiSlot, itemPair);
+            UpdateSlotVisual(uiSlot, itemPair, index);
             uiSlot.name = slotPrefab.name + index;
             return uiSlot;
         }
-
 
         private void UpdateSlotsRegistries()
         {
             int count = slots.Count;
             for (int i = 0; i < count; i++)
-            {
                 UpdateTargetSlot(i);
-            }
+            
         }
         protected void UpdateTargetSlot(int slotIndex)
         {
@@ -130,24 +129,24 @@ namespace Jega.BlueGravity
                     storedItemIndex = -1;
             }
             slots[slotIndex] = new Slot(slot.UISlot, slot.Index, itemPair, InventorySaveKey, storedItemIndex);
-            UpdateSlotVisual(slot.UISlot, itemPair);
+            UpdateSlotVisual(slot.UISlot, itemPair, slotIndex);
         }
         #endregion
 
-        protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair)
+        protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
         {
-            slotVisual.UpdateInfo(this, itemPair, InventorySaveKey);
+            slotVisual.UpdateInfo(this, itemPair, InventorySaveKey, slotIndex);
         }
 
         protected void UpdateSlotsVisuals()
         {
             foreach (Slot slot in slots)
-                UpdateSlotVisual(slot.UISlot, slot.ItemPair);
+                UpdateSlotVisual(slot.UISlot, slot.ItemPair, slot.Index);
         }
 
 
-
-        void SwitchSlots(Inventory inventoryManager, InventorySlot original, InventorySlot destination)
+        #region inventories interactions
+        private void SwitchOwnedSlots(Inventory inventoryManager, InventorySlot original, InventorySlot destination)
         {
             if (inventoryManager != this) return;
 
@@ -157,30 +156,49 @@ namespace Jega.BlueGravity
             slots[originSlot.Index] = new Slot(originSlot.UISlot, originSlot.Index, destinationSlot.ItemPair, InventorySaveKey, destinationSlot.ItemIndex);
             slots[destinationSlot.Index] = new Slot(destinationSlot.UISlot, destinationSlot.Index, originSlot.ItemPair, InventorySaveKey, originSlot.ItemIndex);
 
-            UpdateSlotVisual(original, slots[originSlot.Index].ItemPair);
-            UpdateSlotVisual(destination, slots[destinationSlot.Index].ItemPair);
+            UpdateSlotVisual(original, slots[originSlot.Index].ItemPair, originSlot.Index);
+            UpdateSlotVisual(destination, slots[destinationSlot.Index].ItemPair, destinationSlot.Index);
+        }
+        private void HandleClothingEquiping(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest)
+        {
+            if (inventoryOrigin != this && inventoryDestination != this) return;
+
+            bool isThisClothingInventory = this is ClothingInventory;
+            bool isThisPlayerInventory = this is not ClothingInventory;
+            if (inventoryOrigin == this)
+            {
+                LoseItemAmount(itemOrigin, 1);
+                if (itemDest != null && isThisPlayerInventory)
+                    GainItemAmount(itemDest, 1);
+            }
+            else
+            {
+                if (itemDest != null && isThisClothingInventory)
+                    LoseItemAmount(itemDest, 1);
+
+                GainItemAmount(itemOrigin, 1);
+            }
+
         }
 
         private void CheckItemBought(Inventory shopIventory, InventoryItem item, int amount)
         {
             if(this == sessionService.CurrentClientInventory)
-                GainItemamount(item, amount);
+                GainItemAmount(item, amount);
             
             else if(this == sessionService.CurrentShopInventory)
                 LoseItemAmount(item, amount);
             
         }
-
-
         private void CheckItemSold(Inventory shopIventory, InventoryItem item, int amount)
         {
             if (this == sessionService.CurrentShopInventory)
-                GainItemamount(item, amount);
+                GainItemAmount(item, amount);
             else if (this == sessionService.CurrentClientInventory)
                 LoseItemAmount(item, amount);
         }
 
-        private void GainItemamount(InventoryItem item, int amount)
+        protected virtual void GainItemAmount(InventoryItem item, int amount)
         {
             int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);
             int newOwned = previousOwned + amount;
@@ -201,23 +219,36 @@ namespace Jega.BlueGravity
                         Slot currentSlot = slots[i];
                         int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
                         slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
-                        UpdateSlotVisual(slots[i].UISlot, itemPair);
+                        UpdateSlotVisual(slots[i].UISlot, itemPair, i);
                         break;
                     }
                 }
             }
         }
-        private void LoseItemAmount(InventoryItem item, int amount)
+        protected virtual void LoseItemAmount(InventoryItem item, int amount)
         {
+            int slotIndex = slots.FindIndex(a => a.Item == item);
             int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);
             int newOwned = previousOwned - amount;
             item.SetCustomSavedAmount(InventorySaveKey, newOwned);
-            int slotIndex = slots.FindIndex(a => a.Item == item);
             UpdateTargetSlot(slotIndex);
         }
+        #endregion
 
+        public bool GetHasSpaceForTransaction(InventoryItem item)
+        {
+            int ownedIndex = slots.FindIndex(a => a.Item == item);
+            if (ownedIndex > 0)
+                return true;
 
-        #region public straucks
+            foreach(Slot slot in slots)
+                if (slot.IsEmpty)
+                    return true;
+
+            return false;
+        }
+
+        #region public structs
         [Serializable]
         public struct Slot
         {

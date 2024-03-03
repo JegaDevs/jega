@@ -35,9 +35,9 @@ namespace Jega.BlueGravity
         }
 
 
-        protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair)
+        protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
         {
-            base.UpdateSlotVisual(slotVisual, itemPair);
+            base.UpdateSlotVisual(slotVisual, itemPair, slotIndex);
             slotVisual.UpdateAvailability();
         }
 
