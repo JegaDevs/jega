@@ -217,6 +217,8 @@ namespace Jega.BlueGravity
                 sessionService.CurrentCoins += price;
                 OnItemSold?.Invoke(inventoryManager, item, 1);
             }
+            if(isEmpty)
+                pricePopUp.gameObject.gameObject.SetActive(false);
         }
         #endregion
     }
