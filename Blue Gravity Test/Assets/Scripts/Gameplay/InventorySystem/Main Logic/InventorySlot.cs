@@ -19,7 +19,6 @@ namespace Jega.BlueGravity.InventorySystem
         public delegate void ItemTransaction(Inventory shopInventory, InventoryItem item, int amount);
 
         public Action OnSlotUpdated;
-        public Action OnRequestAvailabilityCheck;
         public Action<PointerEventData> OnStartDrag;
         public Action<PointerEventData> OnStayDrag;
         public Action<bool> OnExitDrag;
@@ -80,11 +79,6 @@ namespace Jega.BlueGravity.InventorySystem
             inventoryManager = inventory;
             this.slotIndex = slotIndex;
             OnSlotUpdated?.Invoke();
-        }
-
-        public void UpdateAvailability()
-        {
-            OnRequestAvailabilityCheck?.Invoke();
         }
 
         #region Draging Behavior

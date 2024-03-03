@@ -44,7 +44,8 @@ namespace Jega.BlueGravity
             pricePopUp.SetActive(false);
 
             inventorySlot.OnSlotUpdated += UpdateSlot;
-            inventorySlot.OnRequestAvailabilityCheck += UpdateAvailability;
+            inventorySlot.OnSlotUpdated += UpdateAvailability;
+            sessionService.OnCoinsUpdate += UpdateAvailability;
 
             inventorySlot.OnStartDrag += StartDrag;
             inventorySlot.OnStayDrag += StayDrag;
@@ -55,7 +56,8 @@ namespace Jega.BlueGravity
         private void OnDestroy()
         {
             inventorySlot.OnSlotUpdated -= UpdateSlot;
-            inventorySlot.OnRequestAvailabilityCheck -= UpdateAvailability;
+            inventorySlot.OnSlotUpdated -= UpdateAvailability;
+            sessionService.OnCoinsUpdate -= UpdateAvailability;
 
             inventorySlot.OnStartDrag -= StartDrag;
             inventorySlot.OnStayDrag -= StayDrag;

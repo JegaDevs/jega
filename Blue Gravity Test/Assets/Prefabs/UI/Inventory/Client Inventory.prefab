@@ -122,5 +122,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryData: {fileID: 11400000, guid: f477057b7fdada143ad8222c6226e44d, type: 2}
   slotsParent: {fileID: 3238016196626855666}
-  slotPrefab: {fileID: 407325736994126527, guid: c96c1e00de04de940b11d05d15838e1a, type: 3}
+  slotPrefab: {fileID: 6163721774808065760, guid: eb273b9fb5aeffd4ca0c9433e2ff251d, type: 3}
   slots: []

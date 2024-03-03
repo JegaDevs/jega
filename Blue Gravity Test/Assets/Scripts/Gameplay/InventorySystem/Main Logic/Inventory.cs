@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using static Jega.BlueGravity.InventorySystem.Inventory;
 
 namespace Jega.BlueGravity.InventorySystem
 {
@@ -19,7 +20,7 @@ namespace Jega.BlueGravity.InventorySystem
         [SerializeField] private Transform slotsParent;
         [SerializeField] private InventorySlot slotPrefab;
 
-        protected List<Slot> slots;
+        [SerializeField]protected List<Slot> slots;
         protected SessionService sessionService;
 
         public string InventorySaveKey => inventoryData.inventorySaveKey;
@@ -49,7 +50,7 @@ namespace Jega.BlueGravity.InventorySystem
 
         protected virtual void OnEnable()
         {
-            UpdateAllSlotsRegestries();
+            UpdateAllSlots();
         }
 
         #region Initial Setup
@@ -77,8 +78,9 @@ namespace Jega.BlueGravity.InventorySystem
                         unfilledStartingItems.Remove(startingItem);
                     }
                 }
-                InventorySlot slotSetup = CreateNewSlots(startingItem, i);
-                slots.Add(new Slot(slotSetup, i, startingItem, InventorySaveKey, storedItemIndex));
+                InventorySlot slotManager = CreateNewSlots(i);
+                slots.Add(new Slot(slotManager, i, startingItem, InventorySaveKey, storedItemIndex));
+                OnSlotUpdated?.Invoke(this, slotManager, startingItem, i);
             }
 
             if (unfilledStartingItems.Count <= 0)
@@ -95,23 +97,22 @@ namespace Jega.BlueGravity.InventorySystem
                         startingItem.Item.SetCustomSavedAmount(InventorySaveKey, startingItem.Amount);
                         int storedItemIndex = ItemCollection.IndexOf(startingItem.Item);
                         slots[i] = new Slot(currentSlot.SlotManager, currentSlot.Index, startingItem, InventorySaveKey, storedItemIndex);
-                        UpdateSlotManager(slots[i].SlotManager, startingItem, i);
+                        OnSlotUpdated?.Invoke(this, currentSlot.SlotManager, startingItem, i);
                         break;
                     }
                 }
             }
             Debug.Log("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
-        private InventorySlot CreateNewSlots(StartingItem startingItem, int index)
+        private InventorySlot CreateNewSlots(int index)
         {
             InventorySlot slotManager = Instantiate(slotPrefab, slotsParent);
             slotManager.RegisterManager(this);
-            UpdateSlotManager(slotManager, startingItem, index);
             slotManager.name = slotPrefab.name + index;
             return slotManager;
         }
 
-        private void UpdateAllSlotsRegestries()
+        protected void UpdateAllSlots()
         {
             int count = slots.Count;
             for (int i = 0; i < count; i++)
@@ -134,19 +135,10 @@ namespace Jega.BlueGravity.InventorySystem
                     storedItemIndex = -1;
             }
             slots[slotIndex] = new Slot(slot.SlotManager, slot.Index, startingItem, InventorySaveKey, storedItemIndex);
-            UpdateSlotManager(slot.SlotManager, startingItem, slotIndex);
+            OnSlotUpdated?.Invoke(this, slots[slotIndex].SlotManager, startingItem, slotIndex);
         }
         #endregion
 
-        protected void UpdateAllSlotsManagers()
-        {
-            foreach (Slot slot in slots)
-                UpdateSlotManager(slot.SlotManager, slot.StartingItem, slot.Index);
-        }
-        protected virtual void UpdateSlotManager(InventorySlot slotManager, StartingItem startingItem, int slotIndex)
-        {
-            OnSlotUpdated?.Invoke(this, slotManager, startingItem, slotIndex);
-        }
 
         #region Inventories interactions
         private void SwitchOwnedSlots(Inventory inventoryManager, InventorySlot original, InventorySlot destination)
@@ -159,8 +151,8 @@ namespace Jega.BlueGravity.InventorySystem
             slots[originSlot.Index] = new Slot(originSlot.SlotManager, originSlot.Index, destinationSlot.StartingItem, InventorySaveKey, destinationSlot.ItemId);
             slots[destinationSlot.Index] = new Slot(destinationSlot.SlotManager, destinationSlot.Index, originSlot.StartingItem, InventorySaveKey, originSlot.ItemId);
 
-            UpdateSlotManager(original, slots[originSlot.Index].StartingItem, originSlot.Index);
-            UpdateSlotManager(destination, slots[destinationSlot.Index].StartingItem, destinationSlot.Index);
+            OnSlotUpdated?.Invoke(this, slots[originSlot.Index].SlotManager, slots[originSlot.Index].StartingItem, originSlot.Index);
+            OnSlotUpdated?.Invoke(this, slots[destinationSlot.Index].SlotManager, slots[destinationSlot.Index].StartingItem, destinationSlot.Index);
         }
         private void HandleClothingEquiping(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest)
         {
@@ -222,7 +214,7 @@ namespace Jega.BlueGravity.InventorySystem
                         Slot currentSlot = slots[i];
                         int storedItemIndex = ItemCollection.IndexOf(startingItem.Item);
                         slots[i] = new Slot(currentSlot.SlotManager, currentSlot.Index, startingItem, InventorySaveKey, storedItemIndex);
-                        UpdateSlotManager(slots[i].SlotManager, startingItem, i);
+                        OnSlotUpdated?.Invoke(this, slots[i].SlotManager, startingItem, i);
                         break;
                     }
                 }
@@ -237,6 +229,8 @@ namespace Jega.BlueGravity.InventorySystem
             UpdateTargetSlot(slotIndex);
         }
         #endregion
+
+
         public bool GetHasSpaceForTransaction(InventoryItem item)
         {
             int ownedIndex = slots.FindIndex(a => a.Item == item);

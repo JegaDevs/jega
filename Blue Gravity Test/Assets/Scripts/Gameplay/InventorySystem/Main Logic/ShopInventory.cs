@@ -4,23 +4,13 @@ using UnityEngine;
 
 namespace Jega.BlueGravity.InventorySystem
 {
+    [DefaultExecutionOrder(-1)]
     public class ShopInventory : Inventory
     {
         [SerializeField] private List<ItemPrices> shopCatalog;
 
         public List<ItemPrices> ShopCatalog => new List<ItemPrices>(shopCatalog);
 
-        protected override void Awake()
-        {
-            base.Awake();
-            sessionService.OnCoinsUpdate += UpdateAllSlotsManagers;
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            sessionService.OnCoinsUpdate -= UpdateAllSlotsManagers;
-        }
         protected override void OnEnable()
         {
             sessionService.RegisterActiveShopInventory(this);
@@ -31,12 +21,6 @@ namespace Jega.BlueGravity.InventorySystem
             sessionService.UnregisterActiveShopInventory();
         }
 
-
-        protected override void UpdateSlotManager(InventorySlot slotVisual, StartingItem startingItem, int slotIndex)
-        {
-            base.UpdateSlotManager(slotVisual, startingItem, slotIndex);
-            slotVisual.UpdateAvailability();
-        }
 
         [Serializable]
         public struct ItemPrices
