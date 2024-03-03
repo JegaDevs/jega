@@ -2,8 +2,6 @@ using Jega.BlueGravity;
 using Jega.BlueGravity.InventorySystem;
 using Jega.BlueGravity.PreWrittenCode;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

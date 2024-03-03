@@ -13,13 +13,13 @@ namespace Jega.BlueGravity.InventorySystem
         protected override void Awake()
         {
             base.Awake();
-            sessionService.OnCoinsUpdate += UpdateAllSlotsVisuals;
+            sessionService.OnCoinsUpdate += UpdateAllSlotsManagers;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            sessionService.OnCoinsUpdate -= UpdateAllSlotsVisuals;
+            sessionService.OnCoinsUpdate -= UpdateAllSlotsManagers;
         }
         protected override void OnEnable()
         {
@@ -32,9 +32,9 @@ namespace Jega.BlueGravity.InventorySystem
         }
 
 
-        protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
+        protected override void UpdateSlotManager(InventorySlot slotVisual, StartingItem startingItem, int slotIndex)
         {
-            base.UpdateSlotVisual(slotVisual, itemPair, slotIndex);
+            base.UpdateSlotManager(slotVisual, startingItem, slotIndex);
             slotVisual.UpdateAvailability();
         }
 

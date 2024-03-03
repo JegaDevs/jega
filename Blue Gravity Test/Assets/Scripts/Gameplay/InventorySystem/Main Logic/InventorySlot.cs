@@ -2,7 +2,9 @@ using Jega.BlueGravity.PreWrittenCode;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
+using static Jega.BlueGravity.InventorySystem.Inventory;
 
 namespace Jega.BlueGravity.InventorySystem
 {
@@ -24,17 +26,16 @@ namespace Jega.BlueGravity.InventorySystem
         public Action OnPointerEnterEvent;
         public Action OnPointerExitEvent;
 
-
         [SerializeField] private bool isShop;
 
         private bool isEmpty;
         private int itemAmount;
         private bool isDragging;
 
-        private SessionService sessionService;
+        private int slotIndex;
         private Inventory inventoryManager;
         private InventoryItem inventoryItem;
-        private int slotIndex;
+        private SessionService sessionService;
 
         public Inventory InventoryManager => inventoryManager;
         public InventoryItem InventoryItem => inventoryItem;
@@ -51,18 +52,34 @@ namespace Jega.BlueGravity.InventorySystem
         }
         private void OnEnable()
         {
-            if(isDragging)
+            if (isDragging)
                 OnExitDrag?.Invoke(false);
         }
-        public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
+        private void OnDestroy()
         {
-            itemAmount = itemPair.IsValid ? itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount) : 0;
+            if (inventoryManager)
+            {
+                inventoryManager.OnSlotUpdated -= UpdateInfo;
+            }
+        }
+
+        public void RegisterManager(Inventory inventory)
+        {
+            Assert.IsTrue(inventory != null);
+
+            inventoryManager = inventory;
+            inventoryManager.OnSlotUpdated += UpdateInfo;
+        }
+        public void UpdateInfo(Inventory inventory, InventorySlot slot, StartingItem startingItem, int slotIndex)
+        {
+            if (slot != this) return;
+
+            itemAmount = startingItem.IsValid ? startingItem.Item.GetCustomSavedAmount(inventory.InventorySaveKey, startingItem.Amount) : 0;
             isEmpty = itemAmount <= 0;
-            inventoryItem = itemPair.Item;
-            inventoryManager = manager;
+            inventoryItem = startingItem.Item;
+            inventoryManager = inventory;
             this.slotIndex = slotIndex;
             OnSlotUpdated?.Invoke();
-
         }
 
         public void UpdateAvailability()

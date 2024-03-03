@@ -11,9 +11,9 @@ namespace Jega.BlueGravity.InventorySystem
         {
             sessionService.UnregisterClientShopInventory();
         }
-        protected override void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
+        protected override void UpdateSlotManager(InventorySlot slotVisual, StartingItem startingItem, int slotIndex)
         {
-            base.UpdateSlotVisual(slotVisual, itemPair, slotIndex);
+            base.UpdateSlotManager(slotVisual, startingItem, slotIndex);
             slotVisual.UpdateAvailability();
         }
     }
