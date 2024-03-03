@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+
+namespace Jega.BlueGravity.InventorySystem
+{
+    public class ClothingInventory : Inventory
+    {
+        public static Action OnClothingInventoryUpdated;
+
+        private const int HeadSlotIndex = 0;
+        private const int BodySlotIndex = 1;
+
+        public List<Slot> Slots => slots;
+        public ClothingItem HeadItem => slots[HeadSlotIndex].Item as ClothingItem;
+        public ClothingItem BodyItem => slots[BodySlotIndex].Item as ClothingItem;
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            sessionService.RegisterClothingInventory(this);
+        }
+
+        public bool CheckIfSwitchIsValid(InventoryItem item, int slotIndex)
+        {
+            if (item is not ClothingItem clothing) return false;
+            if (clothing.Type == ClothingItem.ClothingType.Head)
+                return slotIndex == HeadSlotIndex;
+            else
+                return slotIndex == BodySlotIndex;
+        }
+
+
+        protected override void GainItemAmount(InventoryItem item, int amount)
+        {
+            int previousOwned = item.GetCustomSavedAmount(InventorySaveKey, 0);
+            int newOwned = previousOwned + amount;
+            item.SetCustomSavedAmount(InventorySaveKey, newOwned);
+            ItemPair itemPair = new ItemPair(item);
+            if (item is ClothingItem clothingItem)
+            {
+                if (clothingItem.Type == ClothingItem.ClothingType.Body)
+                    SetSlot(BodySlotIndex, itemPair);
+                else
+                    SetSlot(HeadSlotIndex, itemPair);
+            }
+            OnClothingInventoryUpdated?.Invoke();
+
+            void SetSlot(int slotIndex, ItemPair itemPair)
+            {
+                Slot currentSlot = slots[slotIndex];
+                int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
+                slots[slotIndex] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
+                UpdateSlotVisual(slots[slotIndex].UISlot, itemPair, slotIndex);
+            }
+        }
+
+        protected override void LoseItemAmount(InventoryItem item, int amount)
+        {
+            base.LoseItemAmount(item, amount);
+            OnClothingInventoryUpdated?.Invoke();
+        }
+    }
+}
