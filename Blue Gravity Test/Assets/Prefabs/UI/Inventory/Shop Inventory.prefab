@@ -141,3 +141,9 @@ MonoBehaviour:
   - Item: {fileID: 11400000, guid: 8613a15d15abb154eb44a65471b0954b, type: 2}
     BuyPrice: 120
     SellPrice: 70
+  - Item: {fileID: 11400000, guid: 0e292b5c360f9b84e9cdc6bc048777ae, type: 2}
+    BuyPrice: 150
+    SellPrice: 80
+  - Item: {fileID: 11400000, guid: 60f48dc4d3cd00943a733510044baabd, type: 2}
+    BuyPrice: 200
+    SellPrice: 100
