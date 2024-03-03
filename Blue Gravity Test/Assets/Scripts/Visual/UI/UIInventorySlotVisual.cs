@@ -33,6 +33,8 @@ namespace Jega.BlueGravity
         private List<ShopInventory.ItemPrices> ShopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
         private bool IsShop => inventorySlot.IsShop;
 
+        private Vector2 offset;
+
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
@@ -101,9 +103,17 @@ namespace Jega.BlueGravity
                 notAffordableIndicador.SetActive(sessionService.CurrentCoins < price);
             }
         }
+        private void ResetIconPosition()
+        {
+            Vector2 offset = Vector2.zero;
+            if (inventorySlot.IsHeadItem)
+                offset = headOriginalPositionOffset;
+
+            iconTransform.anchoredPosition = originalPosition + offset;
+        }
 
 
-        private void StartDrag()
+        private void StartDrag(PointerEventData eventData)
         {
             iconTransform.SetParent(inventorySlot.InventoryManager.transform.parent, false);
             iconTransform.SetAsLastSibling();
@@ -111,8 +121,9 @@ namespace Jega.BlueGravity
         }
         private void StayDrag(PointerEventData eventData)
         {
-            iconImage.transform.position = eventData.position + draggingOffset;
-            iconImage.transform.position += inventorySlot.IsHeadItem ? headDraggingOffset : Vector3.zero;
+            iconTransform.position = eventData.position;
+            iconTransform.anchoredPosition += draggingOffset;
+            iconTransform.anchoredPosition += inventorySlot.IsHeadItem ? headDraggingOffset : Vector3.zero;
         }
         private void ExitDrag(bool sucess)
         {
@@ -123,14 +134,6 @@ namespace Jega.BlueGravity
                 ResetIconPosition();
         }
 
-        private void ResetIconPosition()
-        {
-            Vector2 offset = Vector2.zero;
-            if (inventorySlot.IsHeadItem)
-                offset = headOriginalPositionOffset;
-
-            iconTransform.anchoredPosition = originalPosition + offset;
-        }
 
         private void OnEnterPointer()
         {

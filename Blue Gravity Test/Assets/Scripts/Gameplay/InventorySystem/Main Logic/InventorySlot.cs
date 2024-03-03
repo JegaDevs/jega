@@ -18,7 +18,7 @@ namespace Jega.BlueGravity.InventorySystem
 
         public Action OnSlotUpdated;
         public Action OnRequestAvailabilityCheck;
-        public Action OnStartDrag;
+        public Action<PointerEventData> OnStartDrag;
         public Action<PointerEventData> OnStayDrag;
         public Action<bool> OnExitDrag;
         public Action OnPointerEnterEvent;
@@ -69,7 +69,7 @@ namespace Jega.BlueGravity.InventorySystem
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
-            OnStartDrag?.Invoke();
+            OnStartDrag?.Invoke(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
