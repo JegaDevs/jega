@@ -1,4 +1,5 @@
 using Jega.BlueGravity.PreWrittenCode;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,21 +18,19 @@ namespace Jega.BlueGravity.InventorySystem
         public delegate void SlotSwitchInventories(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest);
         public delegate void ItemTransaction(Inventory shopInventory, InventoryItem item, int amount);
 
-        [SerializeField] private Image iconImage;
-        [SerializeField] private TextMeshProUGUI textMesh;
-        [SerializeField] private Vector2 draggingOffset;
-        [SerializeField] private Vector2 headDraggingOffset;
-        [SerializeField] private Vector2 headOriginalPositionOffset;
-        [Header("Shop interactions")]
-        [SerializeField] private bool isShop;
-        [SerializeField] private Image unAvailable;
-        [SerializeField] private GameObject pricePopUp;
-        [SerializeField] private GameObject notAffordableIndicador;
-        [SerializeField] private TextMeshProUGUI priceText;
+        public Action OnSlotUpdated;
+        public Action OnRequestAvailabilityCheck;
+        public Action OnStartDrag;
+        public Action<PointerEventData> OnStayDrag;
+        public Action<bool> OnExitDrag;
+        public Action OnPointerEnterEvent;
+        public Action OnPointerExitEvent;
 
-        private RectTransform iconTransform;
-        private Vector2 originalPosition;
+
+        [SerializeField] private bool isShop;
+
         private bool isEmpty;
+        private int itemAmount;
 
         private SessionService sessionService;
         private Inventory inventoryManager;
@@ -40,92 +39,51 @@ namespace Jega.BlueGravity.InventorySystem
 
         public Inventory InventoryManager => inventoryManager;
         public InventoryItem InventoryItem => inventoryItem;
+        public int ItemAmount => itemAmount;
+        public bool IsHeadItem => inventoryItem is ClothingItem clothingItem && clothingItem.Type == ClothingItem.ClothingType.Head;
+        public bool IsShop => isShop;
         private bool IsShopActive => sessionService.IsShopActive;
-        private bool IsHeadItem => inventoryItem is ClothingItem clothingItem && clothingItem.Type == ClothingItem.ClothingType.Head;
         private List<ShopInventory.ItemPrices> shopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
 
 
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
-            iconTransform = iconImage.GetComponent<RectTransform>();
-            originalPosition = iconTransform.anchoredPosition;
 
-            unAvailable.gameObject.SetActive(false);
-            pricePopUp.SetActive(false);
-        }
-        private void OnDisable()
-        {
-            if (pricePopUp.gameObject.activeSelf)
-                pricePopUp.gameObject.gameObject.SetActive(false);
         }
 
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
-            isEmpty = true;
-            textMesh.text = string.Empty;
-            iconImage.gameObject.SetActive(itemPair.IsValid);
-
-            if (itemPair.IsValid)
-            {
-                int itemAmount = itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount);
-                if (itemAmount > 0)
-                {
-                    iconImage.sprite = itemPair.Item.Icon;
-                    textMesh.text = itemAmount.ToString();
-                    isEmpty = false;
-                }
-            }
-
+            itemAmount = itemPair.IsValid ? itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount) : 0;
+            isEmpty = itemAmount <= 0;
             inventoryItem = itemPair.Item;
             inventoryManager = manager;
             this.slotIndex = slotIndex;
-            ResetIconPosition();
+            OnSlotUpdated?.Invoke();
 
         }
 
         public void UpdateAvailability()
         {
-            if (!sessionService.IsShopActive || inventoryItem == null)
-            {
-                unAvailable.gameObject.SetActive(false);
-                return;
-            }
-            int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
-            unAvailable.gameObject.SetActive(catalogIndex == -1);
-
-            if (isShop && catalogIndex >= 0)
-            {
-                int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
-                notAffordableIndicador.SetActive(sessionService.CurrentCoins < price);
-            }
+            OnRequestAvailabilityCheck?.Invoke();
         }
 
         #region Draging Behavior
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
-
-            iconTransform.SetParent(inventoryManager.transform.parent, false);
-            iconTransform.SetAsLastSibling();
-            textMesh.gameObject.SetActive(false);
+            OnStartDrag?.Invoke();
         }
 
         public void OnDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
-            iconImage.transform.position = eventData.position + draggingOffset;
-            iconImage.transform.position += IsHeadItem ? headDraggingOffset : Vector3.zero;
+            OnStayDrag?.Invoke(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
-
-            iconTransform.SetParent(transform, false);
-            iconTransform.SetAsFirstSibling();
-            textMesh.gameObject.SetActive(true);
-
             GameObject destination = eventData.pointerCurrentRaycast.gameObject;
             HandleSlotSwapInteractions(destination);
         }
@@ -158,17 +116,7 @@ namespace Jega.BlueGravity.InventorySystem
                 }
             }
 
-            if (!sucess)
-                ResetIconPosition();
-        }
-
-        private void ResetIconPosition()
-        {
-            Vector2 offset = Vector2.zero;
-            if (IsHeadItem)
-                offset = headOriginalPositionOffset;
-
-            iconTransform.anchoredPosition = originalPosition + offset;
+            OnExitDrag?.Invoke(sucess);
         }
 
         #endregion
@@ -180,16 +128,13 @@ namespace Jega.BlueGravity.InventorySystem
             int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
             if (catalogIndex == -1) return;
 
-            pricePopUp.gameObject.SetActive(true);
-            int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
-            priceText.text = price.ToString();
+            OnPointerEnterEvent?.Invoke();
 
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (pricePopUp.gameObject.activeSelf)
-                pricePopUp.gameObject.gameObject.SetActive(false);
+            OnPointerExitEvent?.Invoke();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -221,7 +166,7 @@ namespace Jega.BlueGravity.InventorySystem
                 OnItemSold?.Invoke(inventoryManager, item, 1);
             }
             if (isEmpty)
-                pricePopUp.gameObject.gameObject.SetActive(false);
+                OnPointerExitEvent?.Invoke();
         }
         #endregion
     }
