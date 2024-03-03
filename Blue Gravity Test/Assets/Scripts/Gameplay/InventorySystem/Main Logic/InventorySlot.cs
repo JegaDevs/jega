@@ -49,7 +49,6 @@ namespace Jega.BlueGravity.InventorySystem
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
-
         }
 
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)

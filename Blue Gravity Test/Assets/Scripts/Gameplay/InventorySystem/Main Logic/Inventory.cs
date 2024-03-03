@@ -12,8 +12,7 @@ namespace Jega.BlueGravity.InventorySystem
         [SerializeField] private Transform slotsParent;
         [SerializeField] private InventorySlot slotPrefab;
 
-        [SerializeField] protected List<Slot> slots;
-
+        protected List<Slot> slots;
         protected SessionService sessionService;
 
         protected ReadOnlyCollection<InventoryItem> ItemCollection => inventoryData.itemCollection.Collection;
@@ -22,6 +21,7 @@ namespace Jega.BlueGravity.InventorySystem
         private List<ItemPair> StartingItems => inventoryData.startingItems;
         private const string SlotSaveKey = "_Slot_";
 
+        #region initial Setup
         protected virtual void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
@@ -36,6 +36,9 @@ namespace Jega.BlueGravity.InventorySystem
         protected virtual void OnDestroy()
         {
             InventorySlot.OnRequestOwnedSlotsSwitch -= SwitchOwnedSlots;
+            InventorySlot.OnRequestClothingInventorySwitch -= HandleClothingEquiping;
+            InventorySlot.OnItemBought -= CheckItemBought;
+            InventorySlot.OnItemSold -= CheckItemSold;
         }
 
         protected virtual void OnEnable()
@@ -43,7 +46,6 @@ namespace Jega.BlueGravity.InventorySystem
             UpdateSlotsRegistries();
         }
 
-        #region initial Setup
         private void InitialInvetorySetup()
         {
             slots = new List<Slot>();
