@@ -136,7 +136,7 @@ namespace Jega.BlueGravity.InventorySystem
             slotVisual.UpdateInfo(this, itemPair, InventorySaveKey, slotIndex);
         }
 
-        protected void UpdateSlotsVisuals()
+        protected void UpdateAllSlotsVisuals()
         {
             foreach (Slot slot in slots)
                 UpdateSlotVisual(slot.UISlot, slot.ItemPair, slot.Index);
@@ -236,7 +236,7 @@ namespace Jega.BlueGravity.InventorySystem
         public bool GetHasSpaceForTransaction(InventoryItem item)
         {
             int ownedIndex = slots.FindIndex(a => a.Item == item);
-            if (ownedIndex > 0)
+            if (ownedIndex >= 0)
                 return true;
 
             foreach (Slot slot in slots)

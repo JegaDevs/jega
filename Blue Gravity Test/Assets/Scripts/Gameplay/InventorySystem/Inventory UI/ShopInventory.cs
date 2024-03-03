@@ -13,13 +13,13 @@ namespace Jega.BlueGravity.InventorySystem
         protected override void Awake()
         {
             base.Awake();
-            sessionService.OnCoinsUpdate += UpdateSlotsVisuals;
+            sessionService.OnCoinsUpdate += UpdateAllSlotsVisuals;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            sessionService.OnCoinsUpdate -= UpdateSlotsVisuals;
+            sessionService.OnCoinsUpdate -= UpdateAllSlotsVisuals;
         }
         protected override void OnEnable()
         {

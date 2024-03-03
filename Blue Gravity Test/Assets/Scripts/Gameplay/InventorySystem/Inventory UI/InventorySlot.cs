@@ -54,6 +54,11 @@ namespace Jega.BlueGravity.InventorySystem
             unAvailable.gameObject.SetActive(false);
             pricePopUp.SetActive(false);
         }
+        private void OnDisable()
+        {
+            if (pricePopUp.gameObject.activeSelf)
+                pricePopUp.gameObject.gameObject.SetActive(false);
+        }
 
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
@@ -89,7 +94,7 @@ namespace Jega.BlueGravity.InventorySystem
             int catalogIndex = shopCatalog.FindIndex(a => a.Item == inventoryItem);
             unAvailable.gameObject.SetActive(catalogIndex == -1);
 
-            if (isShop && catalogIndex > 0)
+            if (isShop && catalogIndex >= 0)
             {
                 int price = isShop ? shopCatalog[catalogIndex].BuyPrice : shopCatalog[catalogIndex].SellPrice;
                 notAffordableIndicador.SetActive(sessionService.CurrentCoins < price);

@@ -74,7 +74,7 @@ namespace Jega.BlueGravity.PreWrittenCode
             }
             else
             {
-                Debug.LogError("Tried to clear empty UI State: " + newState.name);
+                Debug.LogWarning("Tried to clear empty UI State: " + newState.name);
                 return;
             }
         }
