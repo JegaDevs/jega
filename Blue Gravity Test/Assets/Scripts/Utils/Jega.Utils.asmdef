@@ -1,0 +1,17 @@
+{
+    "name": "Jega.Utils",
+    "rootNamespace": "",
+    "references": [
+        "GUID:64b4abe70416b504191a9783121b1d9b",
+        "GUID:6c5abc3754a25c2419830a7adb1eeebc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

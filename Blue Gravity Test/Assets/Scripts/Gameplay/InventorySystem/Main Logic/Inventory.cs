@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
+using static Jega.BlueGravity.InventorySystem.Inventory;
 
 namespace Jega.BlueGravity.InventorySystem
 {
@@ -12,24 +13,27 @@ namespace Jega.BlueGravity.InventorySystem
     /// </summary>
     public class Inventory : MonoBehaviour
     {
+        public SlotUpdated OnSlotUpdated;
+        public delegate void SlotUpdated(Inventory inventory, InventorySlot slot, StartingItem startingItem, int slotIndex);
+
         [SerializeField] private InventoryData inventoryData;
         [SerializeField] private Transform slotsParent;
         [SerializeField] private InventorySlot slotPrefab;
 
-        protected List<Slot> slots;
+        [SerializeField]protected List<Slot> slots;
         protected SessionService sessionService;
 
+        public string InventorySaveKey => inventoryData.inventorySaveKey;
         protected ReadOnlyCollection<InventoryItem> ItemCollection => inventoryData.itemCollection.Collection;
-        protected string InventorySaveKey => inventoryData.inventorySaveKey;
         protected int NumberOfSlots => inventoryData.numberOfSlots;
-        private List<ItemPair> StartingItems => inventoryData.startingItems;
+        private List<StartingItem> StartingItems => inventoryData.startingItems;
         private const string SlotSaveKey = "_Slot_";
 
         protected virtual void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
-
             InitialInvetorySetup();
+
             InventorySlot.OnRequestOwnedSlotsSwitch += SwitchOwnedSlots;
             InventorySlot.OnRequestClothingInventorySwitch += HandleClothingEquiping;
             InventorySlot.OnItemBought += CheckItemBought;
@@ -46,68 +50,69 @@ namespace Jega.BlueGravity.InventorySystem
 
         protected virtual void OnEnable()
         {
-            UpdateAllSlotsRegestries();
+            UpdateAllSlots();
         }
 
         #region Initial Setup
         private void InitialInvetorySetup()
         {
             slots = new List<Slot>();
-            List<ItemPair> unfilledItemPairs = new List<ItemPair>();
-            foreach (ItemPair itemPair in StartingItems)
-                if (itemPair.Item.GetCustomSavedAmount(InventorySaveKey, itemPair.StartingAmount) > 0)
-                    unfilledItemPairs.Add(itemPair);
+            List<StartingItem> unfilledStartingItems = new List<StartingItem>();
+            foreach (StartingItem startingItem in StartingItems)
+                if (startingItem.Item.GetCustomSavedAmount(InventorySaveKey, startingItem.Amount) > 0)
+                    unfilledStartingItems.Add(startingItem);
 
             //Fill saved slots
             for (int i = 0; i < NumberOfSlots; i++)
             {
-                ItemPair itemPair = default;
+                StartingItem startingItem = default;
                 int storedItemIndex = PlayerPrefs.GetInt(InventorySaveKey + SlotSaveKey + i, -1);
                 if (storedItemIndex >= 0)
                 {
                     InventoryItem storedItem = ItemCollection[storedItemIndex];
                     int startingItemIndex = StartingItems.FindIndex(a => a.Item == storedItem);
-                    int startingAmount = startingItemIndex >= 0 ? StartingItems[startingItemIndex].StartingAmount : 0;
+                    int startingAmount = startingItemIndex >= 0 ? StartingItems[startingItemIndex].Amount : 0;
                     if (storedItem.GetCustomSavedAmount(InventorySaveKey, startingAmount) > 0)
                     {
-                        itemPair = new ItemPair(storedItem, startingAmount);
-                        unfilledItemPairs.Remove(itemPair);
+                        startingItem = new StartingItem(storedItem, startingAmount);
+                        unfilledStartingItems.Remove(startingItem);
                     }
                 }
-                InventorySlot slotSetup = CreateNewSlotVisual(itemPair, i);
-                slots.Add(new Slot(slotSetup, i, itemPair, InventorySaveKey, storedItemIndex));
+                InventorySlot slotManager = CreateNewSlots(i);
+                slots.Add(new Slot(slotManager, i, startingItem, InventorySaveKey, storedItemIndex));
+                OnSlotUpdated?.Invoke(this, slotManager, startingItem, i);
             }
 
-            if (unfilledItemPairs.Count <= 0)
+            if (unfilledStartingItems.Count <= 0)
                 return;
 
-            //Fill unsaved slots (should happen only once to fill initial values on a clear save)
-            foreach (ItemPair itemPair in unfilledItemPairs)
+            //Fill unsaved slots (should happen only once to fill initial values on a empty save)
+            foreach (StartingItem startingItem in unfilledStartingItems)
             {
                 for (int i = 0; i < NumberOfSlots; i++)
                 {
                     if (slots[i].IsEmpty)
                     {
                         Slot currentSlot = slots[i];
-                        itemPair.Item.SetCustomSavedAmount(InventorySaveKey, itemPair.StartingAmount);
-                        int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
-                        slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
-                        UpdateSlotVisual(slots[i].UISlot, itemPair, i);
+                        startingItem.Item.SetCustomSavedAmount(InventorySaveKey, startingItem.Amount);
+                        int storedItemIndex = ItemCollection.IndexOf(startingItem.Item);
+                        slots[i] = new Slot(currentSlot.SlotManager, currentSlot.Index, startingItem, InventorySaveKey, storedItemIndex);
+                        OnSlotUpdated?.Invoke(this, currentSlot.SlotManager, startingItem, i);
                         break;
                     }
                 }
             }
             Debug.Log("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
-        private InventorySlot CreateNewSlotVisual(ItemPair itemPair, int index)
+        private InventorySlot CreateNewSlots(int index)
         {
-            InventorySlot uiSlot = Instantiate(slotPrefab, slotsParent);
-            UpdateSlotVisual(uiSlot, itemPair, index);
-            uiSlot.name = slotPrefab.name + index;
-            return uiSlot;
+            InventorySlot slotManager = Instantiate(slotPrefab, slotsParent);
+            slotManager.RegisterManager(this);
+            slotManager.name = slotPrefab.name + index;
+            return slotManager;
         }
 
-        private void UpdateAllSlotsRegestries()
+        protected void UpdateAllSlots()
         {
             int count = slots.Count;
             for (int i = 0; i < count; i++)
@@ -116,47 +121,38 @@ namespace Jega.BlueGravity.InventorySystem
         protected void UpdateTargetSlot(int slotIndex)
         {
             Slot slot = slots[slotIndex];
-            ItemPair itemPair = default;
+            StartingItem startingItem = default;
             int storedItemIndex = PlayerPrefs.GetInt(InventorySaveKey + SlotSaveKey + slotIndex, -1);
             if (storedItemIndex >= 0)
             {
                 InventoryItem storedItem = ItemCollection[storedItemIndex];
                 int startingItemIndex = StartingItems.FindIndex(a => a.Item == storedItem);
-                int startingAmount = startingItemIndex >= 0 ? StartingItems[startingItemIndex].StartingAmount : 0;
+                int startingAmount = startingItemIndex >= 0 ? StartingItems[startingItemIndex].Amount : 0;
                 int ownedAmount = storedItem.GetCustomSavedAmount(InventorySaveKey, startingAmount);
                 if (ownedAmount > 0)
-                    itemPair = new ItemPair(storedItem, startingAmount);
+                    startingItem = new StartingItem(storedItem, startingAmount);
                 else
                     storedItemIndex = -1;
             }
-            slots[slotIndex] = new Slot(slot.UISlot, slot.Index, itemPair, InventorySaveKey, storedItemIndex);
-            UpdateSlotVisual(slot.UISlot, itemPair, slotIndex);
+            slots[slotIndex] = new Slot(slot.SlotManager, slot.Index, startingItem, InventorySaveKey, storedItemIndex);
+            OnSlotUpdated?.Invoke(this, slots[slotIndex].SlotManager, startingItem, slotIndex);
         }
         #endregion
 
-        protected void UpdateAllSlotsVisuals()
-        {
-            foreach (Slot slot in slots)
-                UpdateSlotVisual(slot.UISlot, slot.ItemPair, slot.Index);
-        }
-        protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
-        {
-            slotVisual.UpdateInfo(this, itemPair, InventorySaveKey, slotIndex);
-        }
 
         #region Inventories interactions
         private void SwitchOwnedSlots(Inventory inventoryManager, InventorySlot original, InventorySlot destination)
         {
             if (inventoryManager != this) return;
 
-            Slot originSlot = slots.Find(a => a.UISlot == original);
-            Slot destinationSlot = slots.Find(a => a.UISlot == destination);
+            Slot originSlot = slots.Find(a => a.SlotManager == original);
+            Slot destinationSlot = slots.Find(a => a.SlotManager == destination);
 
-            slots[originSlot.Index] = new Slot(originSlot.UISlot, originSlot.Index, destinationSlot.ItemPair, InventorySaveKey, destinationSlot.ItemIndex);
-            slots[destinationSlot.Index] = new Slot(destinationSlot.UISlot, destinationSlot.Index, originSlot.ItemPair, InventorySaveKey, originSlot.ItemIndex);
+            slots[originSlot.Index] = new Slot(originSlot.SlotManager, originSlot.Index, destinationSlot.StartingItem, InventorySaveKey, destinationSlot.ItemId);
+            slots[destinationSlot.Index] = new Slot(destinationSlot.SlotManager, destinationSlot.Index, originSlot.StartingItem, InventorySaveKey, originSlot.ItemId);
 
-            UpdateSlotVisual(original, slots[originSlot.Index].ItemPair, originSlot.Index);
-            UpdateSlotVisual(destination, slots[destinationSlot.Index].ItemPair, destinationSlot.Index);
+            OnSlotUpdated?.Invoke(this, slots[originSlot.Index].SlotManager, slots[originSlot.Index].StartingItem, originSlot.Index);
+            OnSlotUpdated?.Invoke(this, slots[destinationSlot.Index].SlotManager, slots[destinationSlot.Index].StartingItem, destinationSlot.Index);
         }
         private void HandleClothingEquiping(Inventory inventoryOrigin, Inventory inventoryDestination, InventoryItem itemOrigin, InventoryItem itemDest)
         {
@@ -210,15 +206,15 @@ namespace Jega.BlueGravity.InventorySystem
             }
             else
             {
-                ItemPair itemPair = new ItemPair(item);
+                StartingItem startingItem = new StartingItem(item);
                 for (int i = 0; i < NumberOfSlots; i++)
                 {
                     if (slots[i].IsEmpty)
                     {
                         Slot currentSlot = slots[i];
-                        int storedItemIndex = ItemCollection.IndexOf(itemPair.Item);
-                        slots[i] = new Slot(currentSlot.UISlot, currentSlot.Index, itemPair, InventorySaveKey, storedItemIndex);
-                        UpdateSlotVisual(slots[i].UISlot, itemPair, i);
+                        int storedItemIndex = ItemCollection.IndexOf(startingItem.Item);
+                        slots[i] = new Slot(currentSlot.SlotManager, currentSlot.Index, startingItem, InventorySaveKey, storedItemIndex);
+                        OnSlotUpdated?.Invoke(this, slots[i].SlotManager, startingItem, i);
                         break;
                     }
                 }
@@ -233,6 +229,8 @@ namespace Jega.BlueGravity.InventorySystem
             UpdateTargetSlot(slotIndex);
         }
         #endregion
+
+
         public bool GetHasSpaceForTransaction(InventoryItem item)
         {
             int ownedIndex = slots.FindIndex(a => a.Item == item);
@@ -250,41 +248,39 @@ namespace Jega.BlueGravity.InventorySystem
         [Serializable]
         public struct Slot
         {
-            public ItemPair ItemPair;
-            public InventorySlot UISlot;
+            public StartingItem StartingItem;
+            public InventorySlot SlotManager;
             public int Index;
-            public int ItemIndex;
-            public Slot(InventorySlot uiSlot, int slotIndex, ItemPair itemPair, string customSlotSaveKey, int itemIndex)
+            public int ItemId;
+            public Slot(InventorySlot uiSlot, int slotIndex, StartingItem startingItem, string customSlotSaveKey, int itemIndex)
             {
-                ItemPair = itemPair;
-                UISlot = uiSlot;
+                StartingItem = startingItem;
+                SlotManager = uiSlot;
                 Index = slotIndex;
-                ItemIndex = itemIndex;
+                ItemId = itemIndex;
 
                 PlayerPrefs.SetInt(customSlotSaveKey + SlotSaveKey + slotIndex, itemIndex);
-
             }
 
-            public InventoryItem Item => ItemPair.Item;
-            public bool IsEmpty => Item == null;
+            public readonly InventoryItem Item => StartingItem.Item;
+            public readonly bool IsEmpty => Item == null;
         }
 
         [Serializable]
-        public struct ItemPair
+        public struct StartingItem
         {
             public InventoryItem Item;
-            public int StartingAmount;
+            public int Amount;
 
-
-            public ItemPair(InventoryItem item, int startingAmount = 0)
+            public StartingItem(InventoryItem item, int startingAmount = 0)
             {
                 Item = item;
-                StartingAmount = startingAmount;
+                Amount = startingAmount;
             }
-            public ItemPair(ItemPair copy)
+            public StartingItem(StartingItem copy)
             {
                 Item = copy.Item;
-                StartingAmount = copy.StartingAmount;
+                Amount = copy.Amount;
             }
 
             public bool IsValid => Item != null;

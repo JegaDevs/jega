@@ -7,7 +7,7 @@ namespace Jega.BlueGravity.InventorySystem
     public class InventoryData : ScriptableObject
     {
         [Header("Game Design Params")]
-        public List<Inventory.ItemPair> startingItems;
+        public List<Inventory.StartingItem> startingItems;
         public int numberOfSlots;
 
         [Header("Programming Params")]
