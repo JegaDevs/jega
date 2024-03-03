@@ -15,6 +15,7 @@ namespace Jega.BlueGravity.InventorySystem
         {
             base.OnEnable();
             sessionService.RegisterClothingInventory(this);
+            OnClothingInventoryUpdated?.Invoke();
         }
 
         public bool CheckIfSwitchIsValid(InventoryItem item, int slotIndex)

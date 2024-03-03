@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Jega.BlueGravity.InventorySystem
 {
+    /// <summary>
+    /// Generic Inventory class. Handles all main slot management logic, shouldbe used 
+    /// as a base class for inventory variants.
+    /// </summary>
     public class Inventory : MonoBehaviour
     {
         [SerializeField] private InventoryData inventoryData;
@@ -21,7 +25,6 @@ namespace Jega.BlueGravity.InventorySystem
         private List<ItemPair> StartingItems => inventoryData.startingItems;
         private const string SlotSaveKey = "_Slot_";
 
-        #region initial Setup
         protected virtual void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
@@ -43,9 +46,10 @@ namespace Jega.BlueGravity.InventorySystem
 
         protected virtual void OnEnable()
         {
-            UpdateSlotsRegistries();
+            UpdateAllSlotsRegestries();
         }
 
+        #region Initial Setup
         private void InitialInvetorySetup()
         {
             slots = new List<Slot>();
@@ -74,7 +78,6 @@ namespace Jega.BlueGravity.InventorySystem
                 slots.Add(new Slot(slotSetup, i, itemPair, InventorySaveKey, storedItemIndex));
             }
 
-
             if (unfilledItemPairs.Count <= 0)
                 return;
 
@@ -96,7 +99,6 @@ namespace Jega.BlueGravity.InventorySystem
             }
             Debug.LogError("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
-
         private InventorySlot CreateNewSlotVisual(ItemPair itemPair, int index)
         {
             InventorySlot uiSlot = Instantiate(slotPrefab, slotsParent);
@@ -105,12 +107,11 @@ namespace Jega.BlueGravity.InventorySystem
             return uiSlot;
         }
 
-        private void UpdateSlotsRegistries()
+        private void UpdateAllSlotsRegestries()
         {
             int count = slots.Count;
             for (int i = 0; i < count; i++)
                 UpdateTargetSlot(i);
-
         }
         protected void UpdateTargetSlot(int slotIndex)
         {
@@ -133,19 +134,17 @@ namespace Jega.BlueGravity.InventorySystem
         }
         #endregion
 
-        protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
-        {
-            slotVisual.UpdateInfo(this, itemPair, InventorySaveKey, slotIndex);
-        }
-
         protected void UpdateAllSlotsVisuals()
         {
             foreach (Slot slot in slots)
                 UpdateSlotVisual(slot.UISlot, slot.ItemPair, slot.Index);
         }
+        protected virtual void UpdateSlotVisual(InventorySlot slotVisual, ItemPair itemPair, int slotIndex)
+        {
+            slotVisual.UpdateInfo(this, itemPair, InventorySaveKey, slotIndex);
+        }
 
-
-        #region inventories interactions
+        #region Inventories interactions
         private void SwitchOwnedSlots(Inventory inventoryManager, InventorySlot original, InventorySlot destination)
         {
             if (inventoryManager != this) return;
@@ -234,7 +233,6 @@ namespace Jega.BlueGravity.InventorySystem
             UpdateTargetSlot(slotIndex);
         }
         #endregion
-
         public bool GetHasSpaceForTransaction(InventoryItem item)
         {
             int ownedIndex = slots.FindIndex(a => a.Item == item);
