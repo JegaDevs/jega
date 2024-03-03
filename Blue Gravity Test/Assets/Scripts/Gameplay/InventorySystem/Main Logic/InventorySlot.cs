@@ -29,6 +29,7 @@ namespace Jega.BlueGravity.InventorySystem
 
         private bool isEmpty;
         private int itemAmount;
+        private bool isDragging;
 
         private SessionService sessionService;
         private Inventory inventoryManager;
@@ -48,7 +49,11 @@ namespace Jega.BlueGravity.InventorySystem
         {
             sessionService = ServiceProvider.GetService<SessionService>();
         }
-
+        private void OnEnable()
+        {
+            if(isDragging)
+                OnExitDrag?.Invoke(false);
+        }
         public void UpdateInfo(Inventory manager, Inventory.ItemPair itemPair, string customSaveKey, int slotIndex)
         {
             itemAmount = itemPair.IsValid ? itemPair.Item.GetCustomSavedAmount(customSaveKey, itemPair.StartingAmount) : 0;
@@ -69,6 +74,7 @@ namespace Jega.BlueGravity.InventorySystem
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
+            isDragging = true;
             OnStartDrag?.Invoke(eventData);
         }
 
@@ -81,6 +87,7 @@ namespace Jega.BlueGravity.InventorySystem
         public void OnEndDrag(PointerEventData eventData)
         {
             if (isEmpty || IsShopActive) return;
+            isDragging = false;
             GameObject destination = eventData.pointerCurrentRaycast.gameObject;
             HandleSlotSwapInteractions(destination);
         }
