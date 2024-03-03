@@ -33,8 +33,6 @@ namespace Jega.BlueGravity
         private List<ShopInventory.ItemPrices> ShopCatalog => sessionService.CurrentShopInventory.ShopCatalog;
         private bool IsShop => inventorySlot.IsShop;
 
-        private Vector2 offset;
-
         private void Awake()
         {
             sessionService = ServiceProvider.GetService<SessionService>();
@@ -46,22 +44,26 @@ namespace Jega.BlueGravity
             pricePopUp.SetActive(false);
 
             inventorySlot.OnSlotUpdated += UpdateSlot;
-            inventorySlot.OnRequestAvailabilityCheck += UpdateAvailability;
+            inventorySlot.OnSlotUpdated += UpdateAvailability;
+            sessionService.OnCoinsUpdate += UpdateAvailability;
+
             inventorySlot.OnStartDrag += StartDrag;
             inventorySlot.OnStayDrag += StayDrag;
             inventorySlot.OnExitDrag += ExitDrag;
             inventorySlot.OnPointerEnterEvent += OnEnterPointer;
-            inventorySlot.OnPointerExitEvent += OnPointerExit;
+            inventorySlot.OnPointerExitEvent += OnExitPointer;
         }
         private void OnDestroy()
         {
             inventorySlot.OnSlotUpdated -= UpdateSlot;
-            inventorySlot.OnRequestAvailabilityCheck -= UpdateAvailability;
+            inventorySlot.OnSlotUpdated -= UpdateAvailability;
+            sessionService.OnCoinsUpdate -= UpdateAvailability;
+
             inventorySlot.OnStartDrag -= StartDrag;
             inventorySlot.OnStayDrag -= StayDrag;
             inventorySlot.OnExitDrag -= ExitDrag;
             inventorySlot.OnPointerEnterEvent -= OnEnterPointer;
-            inventorySlot.OnPointerExitEvent -= OnPointerExit;
+            inventorySlot.OnPointerExitEvent -= OnExitPointer;
         }
 
         private void OnDisable()
@@ -142,7 +144,7 @@ namespace Jega.BlueGravity
             int price = inventorySlot.IsShop ? ShopCatalog[catalogIndex].BuyPrice : ShopCatalog[catalogIndex].SellPrice;
             priceText.text = price.ToString();
         }
-        private void OnPointerExit()
+        private void OnExitPointer()
         {
             if (pricePopUp.gameObject.activeSelf)
                 pricePopUp.gameObject.gameObject.SetActive(false);

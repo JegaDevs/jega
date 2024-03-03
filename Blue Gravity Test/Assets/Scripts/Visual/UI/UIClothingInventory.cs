@@ -2,14 +2,15 @@ using Jega.BlueGravity;
 using Jega.BlueGravity.InventorySystem;
 using Jega.BlueGravity.PreWrittenCode;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIClothingInventory : MonoBehaviour
 {
     [SerializeField] private GameObject headIndicator;
     [SerializeField] private GameObject bodyIndicator;
+    [SerializeField] private Image headPreview;
+    [SerializeField] private Image bodyPreview;
 
     private SessionService sessionService;
     private ClothingInventory ClothingInventory => sessionService.ClothingInventory;
@@ -34,5 +35,10 @@ public class UIClothingInventory : MonoBehaviour
         ClothingItem bodyItem = ClothingInventory.BodyItem;
         headIndicator.SetActive(headItem == null);
         bodyIndicator.SetActive(bodyItem == null);
+
+        headPreview.enabled = headItem != null;
+        bodyPreview.enabled = bodyItem != null;
+        headPreview.sprite = headItem ? headItem.Icon : null;
+        bodyPreview.sprite = bodyItem ? bodyItem.Icon : null;
     }
 }
