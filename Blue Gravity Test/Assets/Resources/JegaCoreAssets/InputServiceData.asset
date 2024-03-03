@@ -15,3 +15,4 @@ MonoBehaviour:
   InputAction: {fileID: -944628639613478452, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
   HorizontalMovement: {fileID: 3803013050582421530, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
   VerticalMovement: {fileID: -9076510076792535728, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
+  OpenInventory: {fileID: 3880147622232257679, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}

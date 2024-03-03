@@ -54,8 +54,8 @@ namespace Jega.BlueGravity
 
         private void UpdateSkin()
         {
-            ClothingItem headItem = ClothingInventory.Slots[ClothingInventory.HeadSlotIndex].Item as ClothingItem;
-            ClothingItem bodyItem = ClothingInventory.Slots[ClothingInventory.BodySlotIndex].Item as ClothingItem;
+            ClothingItem headItem = ClothingInventory.HeadItem;
+            ClothingItem bodyItem = ClothingInventory.BodyItem;
             headAnimator.runtimeAnimatorController = headItem ? headItem.AnimatorController : null;
             bodyAnimator.runtimeAnimatorController = bodyItem ? bodyItem.AnimatorController : null;
         }

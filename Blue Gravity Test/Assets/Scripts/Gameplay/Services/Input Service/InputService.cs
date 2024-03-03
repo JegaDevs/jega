@@ -1,10 +1,14 @@
 using Jega.BlueGravity.PreWrittenCode;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Jega.BlueGravity.Services
 {
     public class InputService : IService
     {
+        public static Action OnInventoryInputPressed;
+
         private InputServiceData serviceData;
         private Vector2 movementVector;
         private Vector2 lastPerformedInput;
@@ -16,10 +20,12 @@ namespace Jega.BlueGravity.Services
         {
             serviceData = StaticPaths.LoadScriptableOrCreateIfMissing<InputServiceData>("InputServiceData");
             serviceData.InitializeInputActions();
+            serviceData.OpenInventory.action.performed += RegisterInventoryInput;
         }
 
         public void Postprocess()
         {
+            serviceData.OpenInventory.action.performed -= RegisterInventoryInput;
             serviceData.UnInitializeInputActions();
         }
 
@@ -30,6 +36,10 @@ namespace Jega.BlueGravity.Services
             if (movementVector.sqrMagnitude > 0)
                 lastPerformedInput = movementVector;
             return movementVector;
+        }
+        void RegisterInventoryInput(InputAction.CallbackContext obj)
+        {
+            OnInventoryInputPressed?.Invoke();
         }
 
 

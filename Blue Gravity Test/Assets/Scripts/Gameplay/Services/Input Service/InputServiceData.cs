@@ -8,6 +8,7 @@ namespace Jega.BlueGravity
         public InputActionAsset InputAction;
         public InputActionReference HorizontalMovement;
         public InputActionReference VerticalMovement;
+        public InputActionReference OpenInventory;
 
         public void InitializeInputActions()
         {

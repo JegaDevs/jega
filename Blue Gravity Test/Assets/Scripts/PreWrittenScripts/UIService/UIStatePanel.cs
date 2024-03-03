@@ -15,10 +15,13 @@ namespace Jega.BlueGravity.PreWrittenCode
         {
             uiService = UIService.Service;
             CallStateAwakes();
-            TogglePannel(GetIsStateActive());
 
             UIService.OnUpdatedUIState += CheckNewState;
 
+        }
+        private void Start()
+        {
+            TogglePannel(GetIsStateActive());
         }
 
         private void OnDestroy()

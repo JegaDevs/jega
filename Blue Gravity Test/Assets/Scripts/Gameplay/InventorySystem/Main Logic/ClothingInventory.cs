@@ -7,10 +7,12 @@ namespace Jega.BlueGravity.InventorySystem
     {
         public static Action OnClothingInventoryUpdated;
 
-        public const int HeadSlotIndex = 0;
-        public const int BodySlotIndex = 1;
+        private const int HeadSlotIndex = 0;
+        private const int BodySlotIndex = 1;
 
         public List<Slot> Slots => slots;
+        public ClothingItem HeadItem => slots[HeadSlotIndex].Item as ClothingItem;
+        public ClothingItem BodyItem => slots[BodySlotIndex].Item as ClothingItem;
         protected override void OnEnable()
         {
             base.OnEnable();
