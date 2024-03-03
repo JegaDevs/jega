@@ -97,7 +97,7 @@ namespace Jega.BlueGravity.InventorySystem
                     }
                 }
             }
-            Debug.LogError("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
+            Debug.Log("Filled unsaved slots. \n Attention! This should happen only once when there's no saved data!");
         }
         private InventorySlot CreateNewSlotVisual(ItemPair itemPair, int index)
         {
