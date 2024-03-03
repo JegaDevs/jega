@@ -9,3 +9,9 @@ Inputs:
 - Movement: WASD or Arrow keys
 - Open Invenotry -> UI Button, I, Space, or Enter
 - Interact with items: mouse click and drag
+
+
+Video demonstration of the game:
+
+https://github.com/JegaDevs/blue-gravity-test/assets/51682506/98a4e66b-58fc-4a4b-949a-0a17c15de669
+
