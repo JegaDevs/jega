@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Jega.BlueGravity
 {
-    [CreateAssetMenu(menuName = "CharacterStats")]
+    [CreateAssetMenu(menuName = "Jega/CharacterStats")]
     public class CharacterStatsData : ScriptableObject
     {
         [SerializeField] private float horizontalVelocity;
