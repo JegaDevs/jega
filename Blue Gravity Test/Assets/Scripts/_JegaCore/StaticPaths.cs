@@ -59,7 +59,6 @@ namespace JegaCore
         /// </summary>
         /// <param name="assetName">Name of the asset, without the '.asset' at the end.</param>
         /// <typeparam name="T">Any UnityEngine.Object</typeparam>
-        /// <returns></returns>
         public static T LoadAssetFromCoreFolder<T>(string assetName) where T : UnityEngine.Object
         {
             return UnityEngine.Resources.Load<T>(CoreAssetsFolderName + "/" + assetName);
@@ -71,7 +70,6 @@ namespace JegaCore
         /// </summary>
         /// <param name="assetName">Name of the asset, without the '.asset' at the end.</param>
         /// <typeparam name="T">Any ScriptableObject or child class object.</typeparam>
-        /// <returns></returns>
         public static T LoadScriptableOrCreateIfMissing<T>(string assetName) where T : UnityEngine.ScriptableObject
         {
             T asset = LoadAssetFromCoreFolder<T>(assetName);

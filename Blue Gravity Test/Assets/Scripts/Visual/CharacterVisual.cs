@@ -1,6 +1,5 @@
 using Jega.BlueGravity.InventorySystem;
 using Jega.BlueGravity.PreWrittenCode;
-using Jega.BlueGravity.Services;
 using System.Collections.Generic;
 using UnityEngine;
 using JegaCore;
@@ -41,13 +40,15 @@ namespace Jega.BlueGravity
         private void Update()
         {
             float velocity = inputService.MovementVector.sqrMagnitude;
-            int xMovement = (int)inputService.LastPerformedInput.x;
-            int yMovement = (int)inputService.LastPerformedInput.y;
+            int xMovement = (int)inputService.MovementVector.x;
+            int yMovement = (int)inputService.MovementVector.y;
+            
             foreach (Animator animator in animators)
             {
                 if (animator.runtimeAnimatorController == null)
                     continue;
                 animator.SetFloat(velocityParam, velocity);
+                if (xMovement + yMovement == 0) continue;
                 animator.SetInteger(xMovementParam, xMovement);
                 animator.SetInteger(yMovementParam, yMovement);
             }

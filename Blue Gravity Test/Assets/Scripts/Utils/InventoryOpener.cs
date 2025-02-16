@@ -1,5 +1,4 @@
 using Jega.BlueGravity.PreWrittenCode;
-using Jega.BlueGravity.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,15 +12,17 @@ namespace Jega.BlueGravity
         [SerializeField] private UIState inventoryState;
 
         private UIService uiService;
+        private CoreInputData inputData;
 
         public void Awake()
         {
             uiService = ServiceProvider.GetService<UIService>();
-            InputService.OnInventoryInputPressed += RequestInventoryState;
+            inputData = InputService.Service.CoreInputData;
+            inputData.OnSpecialButton1Pressed += RequestInventoryState;
         }
         private void OnDestroy()
         {
-            InputService.OnInventoryInputPressed -= RequestInventoryState;
+            inputData.OnSpecialButton1Pressed -= RequestInventoryState;
         }
         void RequestInventoryState()
         {

@@ -81,13 +81,6 @@ namespace JegaCore
                 updateMethodRegister.method?.Invoke();
         }
 
-        private void OnDestroy()
-        {
-            /*UpdateMethodsSet.Clear();
-            LateUpdateMethodsSet.Clear();
-            FixedUpdateMethodsSet.Clear();*/
-        }
-
         private void OnApplicationPause(bool pauseStatus)
         {
             OnUnityApplicationPause?.Invoke(pauseStatus);
@@ -131,14 +124,7 @@ namespace JegaCore
             updateSet.Add(new UpdateMethodRegister(method, priority));
             return true;
         }
-        
-        /// <summary>
-        /// Removes a method from a global update loop registry.
-        /// </summary>
-        /// <param name="method">Method to be removed.</param>
-        /// <param name="updateMethod">Update loop set to remove the method from.</param>
-        /// <returns>True if a method was successfully removed from an update set, false otherwise.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+
         public static bool UnregisterUpdateMethod(Action method, UnityUpdateMethod updateMethod = UnityUpdateMethod.Update)
         {
             if (method == null) return false;
@@ -148,13 +134,6 @@ namespace JegaCore
             return removed > 0;
         }
         
-        /// <summary>
-        /// Changes the priority of a method that was previously registered.
-        /// </summary>
-        /// <param name="method"></param>
-        /// <param name="newPriority"></param>
-        /// <param name="updateMethod"></param>
-        /// <returns></returns>
         public static bool SetMethodPriority(Action method, int newPriority, UnityUpdateMethod updateMethod = UnityUpdateMethod.Update)
         {
             if (method == null) return false;
@@ -176,11 +155,6 @@ namespace JegaCore
         #endregion
         
         #region Global Coroutine Host
-        /// <summary>
-        /// Starts a coroutine on the global host.
-        /// </summary>
-        /// <param name="coroutine"></param>
-        /// <returns></returns>
         public static Coroutine HostCoroutine(IEnumerator coroutine)
         {
             if (InstanceIsInvalid)
@@ -194,30 +168,16 @@ namespace JegaCore
             }
             return Instance.StartCoroutine(coroutine);
         }
-        
-        /// <summary>
-        /// Stops the coroutine running on the global host.
-        /// </summary>
-        /// <param name="coroutine"></param>
         public static void KillCoroutine(IEnumerator coroutine)
         {
             if (Instance == null) return;
             Instance.StopCoroutine(coroutine);
         }
-        
-        /// <summary>
-        /// Stops the coroutine running on the global host.
-        /// </summary>
-        /// <param name="coroutine"></param>
         public static void KillCoroutine(Coroutine coroutine)
         {
             if (Instance == null) return;
             Instance.StopCoroutine(coroutine);
         }
-        
-        /// <summary>
-        /// Calls 'StopAllCoroutines' on the GlobalMonobehavior. Use with care.
-        /// </summary>
         public static void KillAllCoroutines()
         {
             if (Instance == null) return;

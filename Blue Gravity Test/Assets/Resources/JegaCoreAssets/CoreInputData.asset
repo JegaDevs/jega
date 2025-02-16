@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb787564552b8f4f98a3a3a9603e1c7, type: 3}
-  m_Name: InputServiceData
+  m_Script: {fileID: 11500000, guid: ed66f2f60326d4742b4b8b35087fbccc, type: 3}
+  m_Name: CoreInputData
   m_EditorClassIdentifier: 
   InputAction: {fileID: -944628639613478452, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
   HorizontalMovement: {fileID: 3803013050582421530, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
   VerticalMovement: {fileID: -9076510076792535728, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
-  OpenInventory: {fileID: 3880147622232257679, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
+  SpecialButton1: {fileID: 3880147622232257679, guid: b246b39628a7a4047b994d2ccb5ee314, type: 3}
+  SpecialButton2: {fileID: 0}
+  SpecialButton3: {fileID: 0}
