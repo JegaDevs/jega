@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
-using static Jega.BlueGravity.InventorySystem.Inventory;
+using JegaCore;
 
 namespace Jega.BlueGravity.InventorySystem
 {

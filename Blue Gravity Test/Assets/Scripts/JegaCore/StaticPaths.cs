@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using UnityEditor;
 
-namespace Jega.BlueGravity.PreWrittenCode
+namespace JegaCore
 {
     public class StaticPaths
     {

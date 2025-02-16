@@ -4,6 +4,7 @@ using Jega.BlueGravity.PreWrittenCode;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using JegaCore;
 
 public class UIClothingInventory : MonoBehaviour
 {

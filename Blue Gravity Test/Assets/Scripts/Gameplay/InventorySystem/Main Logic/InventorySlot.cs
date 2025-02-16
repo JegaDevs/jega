@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using static Jega.BlueGravity.InventorySystem.Inventory;
+using JegaCore;
 
 namespace Jega.BlueGravity.InventorySystem
 {

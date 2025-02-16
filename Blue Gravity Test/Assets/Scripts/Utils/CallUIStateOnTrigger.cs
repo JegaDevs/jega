@@ -2,6 +2,7 @@ using Jega.BlueGravity.PreWrittenCode;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JegaCore;
 
 namespace Jega.BlueGravity
 {

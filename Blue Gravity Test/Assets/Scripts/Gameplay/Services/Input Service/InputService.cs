@@ -2,6 +2,7 @@ using Jega.BlueGravity.PreWrittenCode;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using JegaCore;
 
 namespace Jega.BlueGravity.Services
 {
@@ -15,6 +16,7 @@ namespace Jega.BlueGravity.Services
 
         public int Priority => 0;
         public Vector2 MovementVector => GetMovementVector();
+        public Vector2 MovementVectorNormalized => MovementVector.normalized;
         public Vector2 LastPerformedInput => lastPerformedInput;
         public void Preprocess()
         {
@@ -41,7 +43,6 @@ namespace Jega.BlueGravity.Services
         {
             OnInventoryInputPressed?.Invoke();
         }
-
 
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]

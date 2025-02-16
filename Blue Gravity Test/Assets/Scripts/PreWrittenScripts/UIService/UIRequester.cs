@@ -1,4 +1,5 @@
 using UnityEngine;
+using JegaCore;
 
 namespace Jega.BlueGravity.PreWrittenCode
 {

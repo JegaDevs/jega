@@ -1,14 +1,15 @@
 using Jega.BlueGravity.PreWrittenCode;
 using Jega.BlueGravity.Services;
 using UnityEngine;
+using JegaCore;
 
 namespace Jega.BlueGravity
 {
     [RequireComponent((typeof(Rigidbody2D)))]
     public class CharacterController : MonoBehaviour
     {
-        [SerializeField] private float horizontalVelocity;
-        [SerializeField] private float verticalVelocity;
+        [SerializeField] private CharacterStatsData characterStats;
+        
         private Rigidbody2D body;
         private Vector2 velocityVector;
 
@@ -16,7 +17,6 @@ namespace Jega.BlueGravity
 
         public Rigidbody2D Body => body;
         public Vector2 VelocityVector => velocityVector;
-
 
         private void Awake()
         {
@@ -27,8 +27,8 @@ namespace Jega.BlueGravity
         private void FixedUpdate()
         {
             velocityVector = inputService.MovementVector.normalized;
-            velocityVector.x *= horizontalVelocity;
-            velocityVector.y *= verticalVelocity;
+            velocityVector.x *= characterStats.HorizontalVelocity;
+            velocityVector.y *= characterStats.VerticalVelocity;
 
             body.velocity = velocityVector;
         }

@@ -1,6 +1,7 @@
 using Jega.BlueGravity.PreWrittenCode;
 using TMPro;
 using UnityEngine;
+using JegaCore;
 
 namespace Jega.BlueGravity
 {

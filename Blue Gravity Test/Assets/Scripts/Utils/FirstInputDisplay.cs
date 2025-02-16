@@ -3,6 +3,7 @@ using Jega.BlueGravity.Services;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JegaCore;
 
 namespace Jega.BlueGravity
 {
